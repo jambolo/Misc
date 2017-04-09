@@ -31,7 +31,7 @@ MT::MT(uint32_t seed)
     reload();
 }
 
-uint32_t MT::get()
+uint32_t MT::operator ()()
 {
     if (state_.index >= N)
     {

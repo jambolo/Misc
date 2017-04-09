@@ -15,10 +15,6 @@
 
 #include <Afx.h>
 
-/********************************************************************************************************************/
-/*																													*/
-/********************************************************************************************************************/
-
 //! This macro asserts that @a v is between @a l and @a h (inclusive)
 //!
 //! @param	l,h		Upper and lower limits. @a l must be <= @a h.
@@ -27,15 +23,14 @@
 //! @hideinitializer
 
 #if defined(_DEBUG)
-
-#define ASSERT_LIMITS(l, v, h)                        \
-    do                                                \
-    {                                                 \
-        if (!((l) <= (v) && (v) <= (h)) &&            \
-            AfxAssertFailedLine(THIS_FILE, __LINE__)) \
-        {                                             \
-            AfxDebugBreak();                          \
-        }                                             \
+ 
+#define ASSERT_LIMITS(l, v, h)                                                                    \
+    do                                                                                              \
+    {                                                                                               \
+        if (!((l) <= (v) && (v) <= (h)) && AfxAssertFailedLine(THIS_FILE, __LINE__)) \
+        {                                                                                           \
+            AfxDebugBreak();                                                                        \
+        }                                                                                           \
     } while (0)
 
 #else // defined ( _DEBUG )

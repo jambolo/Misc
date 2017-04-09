@@ -53,27 +53,27 @@ public:
     }
 
     //! Returns a random value that is implementation-specific.
-    Value operator()()
+    Value operator ()()
     {
-        return Implementation::get();
+        return Implementation::operator ()();
     }
 
     //! Returns a random value in the range [ 0, @a y ).
     //
     //!
     //! @param	y	Upper limit.
-    Value operator()(Value y)
+    Value operator ()(Value y)
     {
-        return operator()(0, y);
+        return operator ()(0, y);
     }
 
     //! Returns a random value in the range [ @a x, @a y ).
     //
     //! @param	x	Lower limit.
     //! @param	y	Upper limit.
-    Value operator()(Value x, Value y)
+    Value operator ()(Value x, Value y)
     {
-        return Implementation::get() % (y - x) + x;
+        return Implementation::operator ()() % (y - x) + x;
     }
 
     //! Sets the state.
@@ -131,7 +131,7 @@ protected:
     }
 
     //! Returns a random value in the range [ @c MIN, @c MAX ).
-    uint32_t get()
+    uint32_t operator ()()
     {
         //	m_Seed = static_cast< uint32_t >( ( A * static_cast< uint64 >( m_Seed ) + B ) % M );
 
@@ -184,8 +184,8 @@ protected:
     //!	Constructor
     MT(uint32_t seed);
 
-    //!	Returns	a random value (@c MIN	<= get() < @c MAX).
-    uint32_t get();
+    //!	Returns	a random value (@c MIN	<= operator () () < @c MAX).
+    uint32_t operator ()();
 
     //!	Sets the state.
     void setState(State const & state);
@@ -218,8 +218,8 @@ typedef LCG32<3039177861, 1>  LCG;
 
 //! A LCG pseudo-random number generator that generates 32-bit unsigned ints.
 //
-//! @warning	If the parameter @a y to the single-parameter function get() is small, the result is not very random.
-//! @warning	If the difference between the parameters @a x and @a y to the two-parameter function get() is small,
+//! @warning	If the parameter @a y to the single-parameter function operator()() is small, the result is not very random.
+//! @warning	If the difference between the parameters @a x and @a y to the two-parameter function operator () () is small,
 //!				the result is not very random.
 //!
 //! @note	See IRandom for interface details.
@@ -228,8 +228,8 @@ typedef IRandom<uint32_t, uint32_t, LCG>  Random;
 
 //! Super-duper
 //
-//! @warning	If the parameter @a y to the single-parameter function get() is small, the result is not very random.
-//! @warning	If the difference between the parameters @a x and @a y to the two-parameter function get() is small,
+//! @warning	If the parameter @a y to the single-parameter function operator()() is small, the result is not very random.
+//! @warning	If the difference between the parameters @a x and @a y to the two-parameter function operator () () is small,
 //!				the result is not very random.
 //!
 //! @note	See IRandom for interface details.
