@@ -13,7 +13,7 @@
 
 #pragma once
 
-#include "Random.h"
+#include "misc/Random.h"
 
 #include <cfloat>
 #include <cstdint>
@@ -21,7 +21,7 @@
 //! Returns a random value the range [0,1).
 
 template< >
-RandomFloat:: Value RandomFloat::get ()
+RandomFloat::Value RandomFloat::operator()()
 {
     // In order to prevent rounding to 1, we must only allow as much precision as a float can handle.
     // floats only have 24 bits of precision so we have a choice of which bits to use. In a 32-bit LCG, the most
@@ -33,16 +33,16 @@ RandomFloat:: Value RandomFloat::get ()
     int const PRECISION = FLT_MANT_DIG;                     // Bits of precision in a float mantissa
     uint32_t const MASK = (1 << PRECISION) - 1;             // Only bits that count
 
-    return Value(Implementation::get() & MASK) /  Value(MASK + 1);
+    return Value(Implementation::get() & MASK) / Value(MASK + 1);
 }
 
 //! Returns a random value in the range [ @a x, @a y ).
 
 template< >
-RandomFloat:: Value RandomFloat::get (Value x, Value y)
+RandomFloat::Value RandomFloat::operator()(Value x, Value y)
 {
-    // get() returns [0,1) so this function must be specialized.
-    return get() * (y - x) + x;
+    // operator()() returns [0,1) so this function must be specialized.
+    return operator()() * (y - x) + x;
 }
 
 //!

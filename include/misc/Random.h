@@ -53,7 +53,7 @@ public:
     }
 
     //! Returns a random value that is implementation-specific.
-    Value get()
+    Value operator()()
     {
         return Implementation::get();
     }
@@ -62,16 +62,16 @@ public:
     //
     //!
     //! @param	y	Upper limit.
-    Value get(Value y)
+    Value operator()(Value y)
     {
-        return get(0, y);
+        return operator()(0, y);
     }
 
     //! Returns a random value in the range [ @a x, @a y ).
     //
     //! @param	x	Lower limit.
     //! @param	y	Upper limit.
-    Value get(Value x, Value y)
+    Value operator()(Value x, Value y)
     {
         return Implementation::get() % (y - x) + x;
     }

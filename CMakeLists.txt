@@ -3,18 +3,23 @@ project(misc CXX)
 
 option(BUILD_SHARED_LIBS "Build libraries as DLLs" FALSE)
 
-find_package(Doxygen)
-if(DOXYGEN_FOUND)
-    add_custom_target(doxygen ALL
-        ${DOXYGEN_EXECUTABLE}
-        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-        COMMENT "Generating API documentation with Doxygen" VERBATIM
-        SOURCES Doxyfile
-    )
-endif(DOXYGEN_FOUND)
+set(${PROJECT_NAME}_DOXYGEN_OUTPUT_DIRECTORY "" CACHE PATH "Doxygen output directory (empty to disable)")
 
-#set(misc_VERSION_MAJOR 0)
-#set(misc_VERSION_MINOR 1)
+if(${PROJECT_NAME}_DOXYGEN_OUTPUT_DIRECTORY)
+    find_package(Doxygen)
+    if(DOXYGEN_FOUND)
+        set(DOXYGEN_OUTPUT_DIRECTORY ${${PROJECT_NAME}_DOXYGEN_OUTPUT_DIRECTORY})
+        configure_file(Doxyfile.in ${PROJECT_BINARY_DIR}/Doxyfile)
+        add_custom_target(doxygen ALL ${DOXYGEN_EXECUTABLE} ${PROJECT_BINARY_DIR}/Doxyfile
+            WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
+        COMMENT "Generating API documentation with Doxygen" VERBATIM
+            SOURCES ${PROJECT_BINARY_DIR}/Doxyfile
+    )
+    endif(DOXYGEN_FOUND)
+endif()
+
+#set(${PROJECT_NAME}_VERSION_MAJOR 0)
+#set(${PROJECT_NAME}_VERSION_MINOR 1)
 #configure_file("${PROJECT_SOURCE_DIR}/Version.h.in" "${PROJECT_BINARY_DIR}/Version.h")
 
 set(PUBLIC_INCLUDE_PATHS
@@ -36,8 +41,8 @@ set(SOURCES
     trace.cpp
 )
 
-add_library(misc ${SOURCES})
-target_compile_definitions(misc
+add_library(${PROJECT_NAME} ${SOURCES})
+target_compile_definitions(${PROJECT_NAME}
     PRIVATE
         -DNOMINMAX
         -DWIN32_LEAN_AND_MEAN
@@ -46,6 +51,6 @@ target_compile_definitions(misc
         -D_SECURE_SCL=0
         -D_SCL_SECURE_NO_WARNINGS
 )
-target_include_directories(misc PUBLIC ${PUBLIC_INCLUDE_PATHS})
+target_include_directories(${PROJECT_NAME} PUBLIC ${PUBLIC_INCLUDE_PATHS})
 
 add_subdirectory(unit-test)

@@ -23,8 +23,8 @@ void main()
 
     Random rng(0);
     RandomFloat frng(0);
-    unsigned int i = rng.get();
-    float f        = frng.get();
+    unsigned int i = rng();
+    float f        = frng();
 
     // Test asserts
 
