@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 3.8)
+cmake_minimum_required (VERSION 3.4)
 project(misc CXX)
 
 option(BUILD_SHARED_LIBS "Build libraries as DLLs" FALSE)
