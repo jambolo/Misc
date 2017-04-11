@@ -1,17 +1,7 @@
-/**	@file *//********************************************************************************************************
-
-                                                     Singleton.h
-
-                                            Copyright 2004,	John J.	Bolton
-    --------------------------------------------------------------------------------------------------------------
-
-    $Header: //depot/Libraries/Misc/Singleton.h#4 $
-
-    $NoKeywords: $
-
-********************************************************************************************************************/
-
 #pragma once
+
+#if !defined(Singleton_h__)
+#define Singleton_h__
 
 //! Base class used to implement a Singleton pattern.
 //!
@@ -70,10 +60,12 @@ private:
 
     // Prevent copy and assignment
     Singleton(Singleton const &);
-    Singleton operator =(Singleton const &);
+    Singleton operator = (Singleton const &);
 
-    static Singleton * instance_;           //!< The single instance
+    static Singleton * instance_; //!< The single instance
 };
 
 template <class T>
 Singleton<T> * Singleton<T>::instance_ = nullptr;
+
+#endif // !defined(Singleton_h__)

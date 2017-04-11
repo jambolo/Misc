@@ -1,17 +1,7 @@
-/** @file *//********************************************************************************************************
-
-                                                       Random.h
-
-                                            Copyright 2003, John J. Bolton
-    --------------------------------------------------------------------------------------------------------------
-
-    $Header: //depot/Libraries/Misc/Random.h#16 $
-
-    $NoKeywords: $
-
-********************************************************************************************************************/
-
 #pragma once
+
+#if !defined(Random_h__)
+#define Random_h__
 
 #include <cstdint>
 
@@ -38,10 +28,10 @@ class IRandom : private I
 {
 public:
 
-    typedef V Value;                                            //!< The type of the values returned by the RNG.
-    typedef S Seed;                                             //!< The type of the seed value.
-    typedef I Implementation;                                   //!< The implementation class.
-    typedef typename Implementation::State State;               //!< The type of the state.
+    typedef V Value;                              //!< The type of the values returned by the RNG.
+    typedef S Seed;                               //!< The type of the seed value.
+    typedef I Implementation;                     //!< The implementation class.
+    typedef typename Implementation::State State; //!< The type of the state.
 
     //! Constructor.
     //
@@ -53,27 +43,27 @@ public:
     }
 
     //! Returns a random value that is implementation-specific.
-    Value operator ()()
+    Value operator () ()
     {
-        return Implementation::operator ()();
+        return Implementation::operator () ();
     }
 
     //! Returns a random value in the range [ 0, @a y ).
     //
     //!
     //! @param	y	Upper limit.
-    Value operator ()(Value y)
+    Value operator () (Value y)
     {
-        return operator ()(0, y);
+        return operator () (0, y);
     }
 
     //! Returns a random value in the range [ @a x, @a y ).
     //
     //! @param	x	Lower limit.
     //! @param	y	Upper limit.
-    Value operator ()(Value x, Value y)
+    Value operator () (Value x, Value y)
     {
-        return Implementation::operator ()() % (y - x) + x;
+        return Implementation::operator () () % (y - x) + x;
     }
 
     //! Sets the state.
@@ -111,14 +101,14 @@ class LCG32
 {
 protected:
 
-    typedef uint32_t Value;         //!< The type of the values returned by this RNG.
-    typedef uint32_t Seed;          //!< The type of the seed value.
-    typedef uint32_t State;         //!< The type of the state.
+    typedef uint32_t Value; //!< The type of the values returned by this RNG.
+    typedef uint32_t Seed;  //!< The type of the seed value.
+    typedef uint32_t State; //!< The type of the state.
 
     enum
     {
-        MIN = 0,                //!< Minimum value generated.
-        MAX = 0xffffffffU       //!< Maximum value generated (M-1).
+        MIN = 0,          //!< Minimum value generated.
+        MAX = 0xffffffffU //!< Maximum value generated (M-1).
     };
 
     //! Constructor
@@ -131,9 +121,9 @@ protected:
     }
 
     //! Returns a random value in the range [ @c MIN, @c MAX ).
-    uint32_t operator ()()
+    uint32_t operator () ()
     {
-        //	m_Seed = static_cast< uint32_t >( ( A * static_cast< uint64 >( m_Seed ) + B ) % M );
+        //	seed_ = static_cast< uint32_t >( ( A * static_cast< uint64 >( m_Seed ) + B ) % M );
 
         seed_ = A * seed_ + B;
 
@@ -157,7 +147,7 @@ protected:
 
 private:
 
-    uint32_t seed_;                        // The seed.
+    uint32_t seed_; // The seed.
 };
 
 //! A Mersenne Twister pseudo-random number generator implementation that generates 32-bit unsigned ints.
@@ -168,15 +158,15 @@ private:
 class MT
 {
 public:
-    static size_t const N     = 624;            //!< The number of elements in the state vector
-    static uint32_t const MIN = 0;              //!< Minimum value generated.
-    static uint32_t const MAX = 0xffffffffU;    //!< Maximum value generated (M-1).
+    static size_t const N     = 624;         //!< The number of elements in the state vector
+    static uint32_t const MIN = 0;           //!< Minimum value generated.
+    static uint32_t const MAX = 0xffffffffU; //!< Maximum value generated (M-1).
 
     //! The state of the generator.
     struct State
     {
-        uint32_t v[N];        //!< The state vector.
-        int      index;       //!< The index into the state vector of the current value.
+        uint32_t v[N]; //!< The state vector.
+        int index;     //!< The index into the state vector of the current value.
     };
 
 protected:
@@ -185,7 +175,7 @@ protected:
     MT(uint32_t seed);
 
     //!	Returns	a random value (@c MIN	<= operator () () < @c MAX).
-    uint32_t operator ()();
+    uint32_t operator () ();
 
     //!	Sets the state.
     void setState(State const & state);
@@ -206,7 +196,7 @@ private:
     void reload();
     static void reloadElement(uint32_t * p0, uint32_t s1, uint32_t sm);
 
-    State state_;      //!< The state of the generator.
+    State state_; //!< The state of the generator.
 };
 
 //! A good LCG implementation.
@@ -214,7 +204,7 @@ private:
 //!
 //! @note	This class is used to implement IRandom and cannot be instantiated by itself.
 
-typedef LCG32<3039177861, 1>  LCG;
+typedef LCG32<3039177861, 1> LCG;
 
 //! A LCG pseudo-random number generator that generates 32-bit unsigned ints.
 //
@@ -224,7 +214,7 @@ typedef LCG32<3039177861, 1>  LCG;
 //!
 //! @note	See IRandom for interface details.
 
-typedef IRandom<uint32_t, uint32_t, LCG>  Random;
+typedef IRandom<uint32_t, uint32_t, LCG> Random;
 
 //! Super-duper
 //
@@ -234,13 +224,13 @@ typedef IRandom<uint32_t, uint32_t, LCG>  Random;
 //!
 //! @note	See IRandom for interface details.
 
-typedef IRandom<uint32_t, uint32_t, LCG32<69069, 1> >    Random69;
+typedef IRandom<uint32_t, uint32_t, LCG32<69069, 1> > Random69;
 
 //! A Mersenne Twister pseudo-random number generator that generates 32-bit unsigned ints.
 //!
 //! @note	See IRandom for interface details.
 
-typedef IRandom<uint32_t, uint32_t, MT>       RandomMT;
+typedef IRandom<uint32_t, uint32_t, MT> RandomMT;
 
 //! A LCG pseudo-random number generator that generates floats.
 //!
@@ -251,3 +241,5 @@ typedef IRandom<float, uint32_t, LCG> RandomFloat;
 // Inline functions
 
 #include "Random.inl"
+
+#endif // !defined(Random_h__)

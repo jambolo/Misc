@@ -1,18 +1,7 @@
-/** @file *//********************************************************************************************************
-
-                                                       trace.h
-
-                                            Copyright 2003, John J. Bolton
-    --------------------------------------------------------------------------------------------------------------
-
-    $Header: //depot/Libraries/Misc/trace.h#7 $
-
-    $NoKeywords: $
-
-
-********************************************************************************************************************/
-
 #pragma once
+
+#if !defined(trace_h__)
+#define trace_h__
 
 //! Outputs to the debugger only in a DEBUG build.
 //!
@@ -47,3 +36,5 @@ void trace(char const * format, ...);
 inline int __BiteMe__(char const *, ...) { return 0; }
 
 #endif // defined( _DEBUG )
+
+#endif // !defined(trace_h__)

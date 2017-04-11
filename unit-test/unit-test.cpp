@@ -10,8 +10,7 @@ class ConstructorFailedExceptionTester
 public:
     ConstructorFailedExceptionTester(bool fail)
     {
-        if (fail)
-        {
+        if (fail) {
             throw ConstructorFailedException();
         }
     }

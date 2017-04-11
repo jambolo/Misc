@@ -1,17 +1,7 @@
-/** @file *//********************************************************************************************************
-
-                                                        Etc.h
-
-                                            Copyright 2002, John J. Bolton
-    --------------------------------------------------------------------------------------------------------------
-
-    $Header: //depot/Libraries/Misc/Etc.h#15 $
-
-    $NoKeywords: $
-
-********************************************************************************************************************/
-
 #pragma once
+
+#if !defined(Etc_h__)
+#define Etc_h__
 
 #include <string>
 
@@ -52,3 +42,5 @@ typedef std::string tstring;
 #define STRINGIZE_HELPER(something) #something
 
 //@}
+
+#endif // !defined(Etc_h__)

@@ -1,16 +1,3 @@
-/** @file *//********************************************************************************************************
-
-                                                      trace.cpp
-
-                                            Copyright 2003, John J. Bolton
-    --------------------------------------------------------------------------------------------------------------
-
-    $Header: //depot/Libraries/Misc/trace.cpp#7 $
-
-    $NoKeywords: $
-
-********************************************************************************************************************/
-
 #if defined(_DEBUG)
 
 #include "misc/trace.h"
@@ -30,7 +17,7 @@ void trace(char const * format, ...)
     va_start(args, format);
 
     _vsnprintf(text, sizeof(text) - 1, format, args);
-    text[sizeof text - 1] = 0;          // Ensure that text is 0 terminated
+    text[sizeof text - 1] = 0; // Ensure that text is 0 terminated
 
     va_end(args);
 
