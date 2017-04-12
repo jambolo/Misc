@@ -32,7 +32,8 @@ namespace
 {
 inline bool non_standard_assert_display(char const * text, char const * file, int line)
 {
-    if (_CrtDbgReport(_CRT_ERROR, file, line, NULL, text)) {
+    if (_CrtDbgReport(_CRT_ERROR, file, line, NULL, text))
+    {
         _CrtDbgBreak();
     }
 
@@ -41,8 +42,10 @@ inline bool non_standard_assert_display(char const * text, char const * file, in
 
 inline void assert_memset_valid_imp(size_t size, signed v, char const * file, int line)
 {
-    if (((v < -128) || (v > 127)) || ((size != 1) && (v != 0) && (v != -1))) {
-        if (_CrtDbgReport(_CRT_ERROR, file, line, NULL, "Invalid memset parameters")) {
+    if (((v < -128) || (v > 127)) || ((size != 1) && (v != 0) && (v != -1)))
+    {
+        if (_CrtDbgReport(_CRT_ERROR, file, line, NULL, "Invalid memset parameters"))
+        {
             _CrtDbgBreak();
         }
     }
@@ -50,8 +53,10 @@ inline void assert_memset_valid_imp(size_t size, signed v, char const * file, in
 
 inline void assert_memset_valid_imp(size_t size, unsigned v, char const * file, int line)
 {
-    if ((v > 255) || ((size != 1) && (v != 0))) {
-        if (_CrtDbgReport(_CRT_ERROR, file, line, NULL, "Invalid memset parameters")) {
+    if ((v > 255) || ((size != 1) && (v != 0)))
+    {
+        if (_CrtDbgReport(_CRT_ERROR, file, line, NULL, "Invalid memset parameters"))
+        {
             _CrtDbgBreak();
         }
     }
@@ -174,7 +179,7 @@ inline void assert_pointer_valid_imp(void const * p, bool null_is_valid, wchar_t
 #define assert_array_index_valid(a, i)                                               \
     (void)((0 <= (i) && (i) < (int)elementsof(a)) ||                                 \
            (_wassert(L"0 <= " _CRT_WIDE(#i) L" <= elementsof( " _CRT_WIDE(#a) L" )", \
-                _CRT_WIDE(__FILE__), __LINE__), 0))
+                     _CRT_WIDE(__FILE__), __LINE__), 0))
 
 #else // defined ( _DEBUG )
 
@@ -212,7 +217,7 @@ inline void assert_pointer_valid_imp(void const * p, bool null_is_valid, wchar_t
 #define assert_aligned(v, n)                                                                            \
     (void)((v) % (n) == 0 ||                                                                            \
            (_wassert(_CRT_WIDE(#v) L" is aligned on a boundary of " _CRT_WIDE(#n), _CRT_WIDE(__FILE__), \
-                __LINE__), 0))
+                     __LINE__), 0))
 
 #else // defined ( _DEBUG )
 

@@ -60,7 +60,7 @@ private:
 
     // Prevent copy and assignment
     Singleton(Singleton const &);
-    Singleton operator = (Singleton const &);
+    Singleton operator =(Singleton const &);
 
     static Singleton * instance_; //!< The single instance
 };

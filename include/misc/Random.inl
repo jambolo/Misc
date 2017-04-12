@@ -32,7 +32,7 @@ template <>
 RandomFloat::Value RandomFloat::operator ()(Value x, Value y)
 {
     // operator()() returns [0,1) so this function must be specialized.
-    return operator () () * (y - x) + x;
+    return operator ()() * (y - x) + x;
 }
 
 //!

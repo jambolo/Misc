@@ -41,7 +41,7 @@ public:
     }
 
     //! Returns a random value that is implementation-specific.
-    Value operator () ()
+    Value operator ()()
     {
         return implementation_();
     }
@@ -49,16 +49,16 @@ public:
     //! Returns a random value in the range [ 0, @a y ).
     //!
     //! @param	y	Upper limit.
-    Value operator () (Value y)
+    Value operator ()(Value y)
     {
-        return operator () (0, y);
+        return operator ()(0, y);
     }
 
     //! Returns a random value in the range [ @a x, @a y ).
     //!
     //! @param	x	Lower limit.
     //! @param	y	Upper limit.
-    Value operator () (Value x, Value y)
+    Value operator ()(Value x, Value y)
     {
         return implementation_() % (y - x) + x;
     }
@@ -77,8 +77,8 @@ public:
         return implementation_.state();
     }
 
-    private:
-        Implementation implementation_;
+private:
+    Implementation implementation_;
 };
 
 //! A LCG pseudo-random number generator implementation template that generates 32-bit unsigned ints.
@@ -120,7 +120,7 @@ public:
     }
 
     //! Returns a random value in the range [ @c MIN, @c MAX ).
-    uint32_t operator () ()
+    uint32_t operator ()()
     {
         //	seed_ = static_cast< uint32_t >( ( A * static_cast< uint64 >( m_Seed ) + B ) % M );
 
@@ -164,15 +164,15 @@ public:
     //! The state of the generator.
     struct State
     {
-        uint32_t v[N]; //!< The state vector.
-        int index;     //!< The index into the state vector of the current value.
+        uint32_t v[N];  //!< The state vector.
+        int      index; //!< The index into the state vector of the current value.
     };
 
     //!	Constructor.
     MT(uint32_t seed);
 
     //!	Returns	a random value (@c MIN	<= operator () () < @c MAX).
-    uint32_t operator () ();
+    uint32_t operator ()();
 
     //!	Sets the state.
     void setState(State const & state);
@@ -187,7 +187,7 @@ private:
     static uint32_t const B = 0x9d2c5680;
     static uint32_t const C = 0xefc60000;
 
-    void reload();
+    void        reload();
     static void reloadElement(uint32_t * p0, uint32_t s1, uint32_t sm);
 
     State state_; //!< The state of the generator.

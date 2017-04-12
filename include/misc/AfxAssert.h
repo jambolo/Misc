@@ -53,7 +53,8 @@
 
 inline void _assert_memset_valid_imp(int size, signed v, char const * file, int line)
 {
-    if (!(((v >= -128) && (v <= 128)) && ((size == 1) || (v == 0) || (v == -1))) && AfxAssertFailedLine(file, line)) {
+    if (!(((v >= -128) && (v <= 128)) && ((size == 1) || (v == 0) || (v == -1))) && AfxAssertFailedLine(file, line))
+    {
         AfxDebugBreak();
     }
 }
@@ -63,7 +64,8 @@ inline void _assert_memset_valid_imp(int size, signed v, char const * file, int 
 
 inline void _assert_memset_valid_imp(int size, unsigned v, char const * file, int line)
 {
-    if (!(((v >= 0) && (v <= 255)) && ((size == 1) || (v == 0))) && AfxAssertFailedLine(file, line)) {
+    if (!(((v >= 0) && (v <= 255)) && ((size == 1) || (v == 0))) && AfxAssertFailedLine(file, line))
+    {
         AfxDebugBreak();
     }
 }
