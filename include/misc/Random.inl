@@ -1,7 +1,7 @@
 #pragma once
 
-#if !defined(Random_h__)
-#define Random_h__
+#if !defined(Random_inl__)
+#define Random_inl__
 
 #include "misc/Random.h"
 
@@ -55,4 +55,4 @@ inline void MT::reloadElement(uint32_t * p0, uint32_t s1, uint32_t sm)
     *p0 = sm ^ ((s0 & 0x80000000U | s1 & 0x7fffffffU) >> 1) ^ (-(int)(s1 & 0x00000001) & A);
 }
 
-#endif // !defined(Random_h__)
+#endif // !defined(Random_inl__)
