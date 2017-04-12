@@ -10,8 +10,8 @@
 
 //! Returns a random value the range [0,1).
 
-template<>
-RandomFloat:: Value RandomFloat::operator () ()
+template <>
+RandomFloat::Value RandomFloat::operator ()()
 {
     // In order to prevent rounding to 1, we must only allow as much precision as a float can handle.
     // floats only have 24 bits of precision so we have a choice of which bits to use. In a 32-bit LCG, the most
@@ -23,13 +23,13 @@ RandomFloat:: Value RandomFloat::operator () ()
     int const PRECISION = FLT_MANT_DIG;         // Bits of precision in a float mantissa
     uint32_t const MASK = (1 << PRECISION) - 1; // Only bits that count
 
-    return Value(Implementation::operator () () & MASK) / Value(MASK + 1);
+    return Value(implementation_() & MASK) /  Value(MASK + 1);
 }
 
 //! Returns a random value in the range [ @a x, @a y ).
 
-template<>
-RandomFloat:: Value RandomFloat::operator () (Value x, Value y)
+template <>
+RandomFloat::Value RandomFloat::operator ()(Value x, Value y)
 {
     // operator()() returns [0,1) so this function must be specialized.
     return operator () () * (y - x) + x;

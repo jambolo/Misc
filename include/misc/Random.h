@@ -7,8 +7,7 @@
 
 //! A class that defines the standard interface for RNG classes.
 //
-//! This class is used to standardize the interface of random number generator classes. This class is not normally
-//! used directly.
+//! This class is used to standardize the interface of random number generator classes.
 //!
 //! @param	V	The type of the values returned by the RNG.
 //! @param	S	The type of the seed value.
@@ -24,7 +23,7 @@
 //!		- @c setState -	Sets the state to the specified value.
 
 template <typename V, typename S, typename I>
-class IRandom : private I
+class IRandom
 {
 public:
 
@@ -34,22 +33,20 @@ public:
     typedef typename Implementation::State State; //!< The type of the state.
 
     //! Constructor.
-    //
     //!
     //! @param	seed		Initial seed.
     IRandom(Seed seed)
-        : Implementation(seed)
+        : implementation_(seed)
     {
     }
 
     //! Returns a random value that is implementation-specific.
     Value operator () ()
     {
-        return Implementation::operator () ();
+        return implementation_();
     }
 
     //! Returns a random value in the range [ 0, @a y ).
-    //
     //!
     //! @param	y	Upper limit.
     Value operator () (Value y)
@@ -58,28 +55,30 @@ public:
     }
 
     //! Returns a random value in the range [ @a x, @a y ).
-    //
+    //!
     //! @param	x	Lower limit.
     //! @param	y	Upper limit.
     Value operator () (Value x, Value y)
     {
-        return Implementation::operator () () % (y - x) + x;
+        return implementation_() % (y - x) + x;
     }
 
     //! Sets the state.
-    //
     //!
     //! @param	state	New state.
     void setState(State const & state)
     {
-        Implementation::setState(state);
+        implementation_.setState(state);
     }
 
     //! Returns the state.
     State const & state() const
     {
-        return Implementation::state();
+        return implementation_.state();
     }
+
+    private:
+        Implementation implementation_;
 };
 
 //! A LCG pseudo-random number generator implementation template that generates 32-bit unsigned ints.
@@ -94,12 +93,12 @@ public:
 //! In this implementation of an LCG, M is 2^32. This is a reasonable value, and it has the advantage that the
 //! "mod M" operation is done automatically by the CPU when the other operations overflow.
 //!
-//! @note	This class is used to implement IRandom and cannot be instantiated by itself.
+//! @note	This class is used to implement Random and cannot be instantiated by itself.
 
 template <int A, int B>
 class LCG32
 {
-protected:
+public:
 
     typedef uint32_t Value; //!< The type of the values returned by this RNG.
     typedef uint32_t Seed;  //!< The type of the seed value.
@@ -153,14 +152,14 @@ private:
 //! A Mersenne Twister pseudo-random number generator implementation that generates 32-bit unsigned ints.
 //
 //!
-//! @note	This class is used to implement IRandom and cannot be instantiated by itself.
+//! @note	This class is used to implement Random and cannot be instantiated by itself.
 
 class MT
 {
 public:
     static size_t const N     = 624;         //!< The number of elements in the state vector
     static uint32_t const MIN = 0;           //!< Minimum value generated.
-    static uint32_t const MAX = 0xffffffffU; //!< Maximum value generated (M-1).
+    static uint32_t const MAX = 0xffffffff;  //!< Maximum value generated (M-1).
 
     //! The state of the generator.
     struct State
@@ -169,9 +168,7 @@ public:
         int index;     //!< The index into the state vector of the current value.
     };
 
-protected:
-
-    //!	Constructor
+    //!	Constructor.
     MT(uint32_t seed);
 
     //!	Returns	a random value (@c MIN	<= operator () () < @c MAX).
@@ -185,13 +182,10 @@ protected:
 
 private:
 
-    enum
-    {
-        M = 397,
-        A = 0x9908b0dfU,
-        B = 0x9d2c5680U,
-        C = 0xefc60000U,
-    };
+    static uint32_t const M = 397;
+    static uint32_t const A = 0x9908b0df;
+    static uint32_t const B = 0x9d2c5680;
+    static uint32_t const C = 0xefc60000;
 
     void reload();
     static void reloadElement(uint32_t * p0, uint32_t s1, uint32_t sm);
@@ -202,7 +196,7 @@ private:
 //! A good LCG implementation.
 //
 //!
-//! @note	This class is used to implement IRandom and cannot be instantiated by itself.
+//! @note	This class is used to implement Random and cannot be instantiated by itself.
 
 typedef LCG32<3039177861, 1> LCG;
 
@@ -212,29 +206,29 @@ typedef LCG32<3039177861, 1> LCG;
 //! @warning	If the difference between the parameters @a x and @a y to the two-parameter function operator () () is small,
 //!				the result is not very random.
 //!
-//! @note	See IRandom for interface details.
+//! @note	See Random for interface details.
 
 typedef IRandom<uint32_t, uint32_t, LCG> Random;
 
 //! Super-duper
 //
 //! @warning	If the parameter @a y to the single-parameter function operator()() is small, the result is not very random.
-//! @warning	If the difference between the parameters @a x and @a y to the two-parameter function operator () () is small,
+//! @warning	If the difference between the parameters @a x and @a y to the two-parameter function operator()() is small,
 //!				the result is not very random.
 //!
-//! @note	See IRandom for interface details.
+//! @note	See Random for interface details.
 
 typedef IRandom<uint32_t, uint32_t, LCG32<69069, 1> > Random69;
 
 //! A Mersenne Twister pseudo-random number generator that generates 32-bit unsigned ints.
 //!
-//! @note	See IRandom for interface details.
+//! @note	See Random for interface details.
 
 typedef IRandom<uint32_t, uint32_t, MT> RandomMT;
 
 //! A LCG pseudo-random number generator that generates floats.
 //!
-//! @note	See IRandom for interface details, however there are small differences.
+//! @note	See Random for interface details, however there are small differences.
 
 typedef IRandom<float, uint32_t, LCG> RandomFloat;
 
