@@ -95,7 +95,7 @@ private:
 //!
 //! @note	This class is used to implement Random and cannot be instantiated by itself.
 
-template <int A, int B>
+template <uint32_t A, uint32_t B>
 class LCG32
 {
 public:
@@ -157,9 +157,9 @@ private:
 class MT
 {
 public:
-    static size_t const N     = 624;         //!< The number of elements in the state vector
-    static uint32_t const MIN = 0;           //!< Minimum value generated.
-    static uint32_t const MAX = 0xffffffff;  //!< Maximum value generated (M-1).
+    static size_t constexpr N     = 624;         //!< The number of elements in the state vector
+    static uint32_t constexpr MIN = 0;           //!< Minimum value generated.
+    static uint32_t constexpr MAX = 0xffffffff;  //!< Maximum value generated (M-1).
 
     //! The state of the generator.
     struct State
