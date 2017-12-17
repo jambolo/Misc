@@ -4,6 +4,7 @@
 #define Random_h__
 
 #include <cstdint>
+#include <cstddef>
 
 //! A class that defines the standard interface for RNG classes.
 //
@@ -157,7 +158,7 @@ private:
 class MT
 {
 public:
-    static size_t constexpr N     = 624;         //!< The number of elements in the state vector
+    static std::size_t constexpr N     = 624;         //!< The number of elements in the state vector
     static uint32_t constexpr MIN = 0;           //!< Minimum value generated.
     static uint32_t constexpr MAX = 0xffffffff;  //!< Maximum value generated (M-1).
 
