@@ -3,7 +3,7 @@
 #if !defined(Random_inl__)
 #define Random_inl__
 
-#include "misc/Random.h"
+#include "Misc/Random.h"
 
 #include <cfloat>
 #include <cstdint>
@@ -11,7 +11,7 @@
 //! Returns a random value the range [0,1).
 
 template <>
-RandomFloat::Value RandomFloat::operator ()()
+inline RandomFloat::Value RandomFloat::operator ()()
 {
     // In order to prevent rounding to 1, we must only allow as much precision as a float can handle.
     // floats only have 24 bits of precision so we have a choice of which bits to use. In a 32-bit LCG, the most
@@ -29,7 +29,7 @@ RandomFloat::Value RandomFloat::operator ()()
 //! Returns a random value in the range [ @a x, @a y ).
 
 template <>
-RandomFloat::Value RandomFloat::operator ()(Value x, Value y)
+inline RandomFloat::Value RandomFloat::operator ()(Value x, Value y)
 {
     // operator()() returns [0,1) so this function must be specialized.
     return operator ()() * (y - x) + x;

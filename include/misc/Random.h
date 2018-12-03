@@ -158,7 +158,7 @@ private:
 class MT
 {
 public:
-    static std::size_t constexpr N     = 624;         //!< The number of elements in the state vector
+    static size_t constexpr N     = 624;         //!< The number of elements in the state vector
     static uint32_t constexpr MIN = 0;           //!< Minimum value generated.
     static uint32_t constexpr MAX = 0xffffffff;  //!< Maximum value generated (M-1).
 
@@ -199,7 +199,7 @@ private:
 //!
 //! @note	This class is used to implement Random and cannot be instantiated by itself.
 
-typedef LCG32<3039177861, 1> LCG;
+using LCG = LCG32<3039177861, 1>;
 
 //! A LCG pseudo-random number generator that generates 32-bit unsigned ints.
 //
@@ -209,7 +209,7 @@ typedef LCG32<3039177861, 1> LCG;
 //!
 //! @note	See Random for interface details.
 
-typedef IRandom<uint32_t, uint32_t, LCG> Random;
+using Random = IRandom<uint32_t, uint32_t, LCG>;
 
 //! Super-duper
 //
@@ -219,19 +219,19 @@ typedef IRandom<uint32_t, uint32_t, LCG> Random;
 //!
 //! @note	See Random for interface details.
 
-typedef IRandom<uint32_t, uint32_t, LCG32<69069, 1> > Random69;
+using Random69 = IRandom<uint32_t, uint32_t, LCG32<69069, 1> >;
 
 //! A Mersenne Twister pseudo-random number generator that generates 32-bit unsigned ints.
 //!
 //! @note	See Random for interface details.
 
-typedef IRandom<uint32_t, uint32_t, MT> RandomMT;
+using RandomMT = IRandom<uint32_t, uint32_t, MT>;
 
 //! A LCG pseudo-random number generator that generates floats.
 //!
 //! @note	See Random for interface details, however there are small differences.
 
-typedef IRandom<float, uint32_t, LCG> RandomFloat;
+using RandomFloat = IRandom<float, uint32_t, LCG>;
 
 // Inline functions
 

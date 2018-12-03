@@ -1,7 +1,7 @@
-#include "misc/Assert.h"
-#include "misc/Etc.h"
-#include "misc/Random.h"
-#include "misc/exceptions.h"
+#include "Misc/Assert.h"
+#include "Misc/Etc.h"
+#include "Misc/Random.h"
+#include "Misc/exceptions.h"
 #include <cassert>
 #include <memory>
 
@@ -17,14 +17,14 @@ public:
     }
 };
 
-void main()
+int main(int argc, char ** argv)
 {
     // Test random number generator
 
     Random rng(0);
     RandomFloat frng(0);
-    unsigned int i = rng();
-    float f        = frng();
+//    unsigned int i = rng();
+//    float f        = frng();
 
     // Test asserts
 
@@ -40,4 +40,6 @@ void main()
     // Test exceptions
 
     ConstructorFailedExceptionTester cfet(true);
+    
+    return 0;
 }

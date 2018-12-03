@@ -27,15 +27,15 @@ set(PUBLIC_INCLUDE_PATHS
 )
 
 set(SOURCES
-    include/misc/AfxAssert.h
-    include/misc/Assert.h
-    include/misc/Etc.h
-    include/misc/exceptions.h
-    include/misc/PathName.h
-    include/misc/Random.h
-    include/misc/Random.inl
-    include/misc/Singleton.h
-    include/misc/trace.h
+    include/Misc/AfxAssert.h
+    include/Misc/Assert.h
+    include/Misc/Etc.h
+    include/Misc/exceptions.h
+    include/Misc/PathName.h
+    include/Misc/Random.h
+    include/Misc/Random.inl
+    include/Misc/Singleton.h
+    include/Misc/trace.h
     
     Random.cpp
     trace.cpp
