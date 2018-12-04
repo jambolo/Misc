@@ -23,7 +23,7 @@ int main(int argc, char ** argv)
 
     Random rng(0);
     RandomFloat frng(0);
-//    unsigned int i = rng();
+    unsigned int i = rng();
 //    float f        = frng();
 
     // Test asserts
