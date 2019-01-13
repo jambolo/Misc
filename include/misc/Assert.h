@@ -7,11 +7,11 @@
 
 #include "misc/Etc.h"
 
-#include <Crtdbg.h>
 #include <cassert>
+#include <Crtdbg.h>
 #include <windows.h>
 
-#endif //defined( _DEBUG )
+#endif // defined(_DEBUG)
 
 //! @name	Asserts
 //!
@@ -33,9 +33,7 @@ namespace
 inline bool non_standard_assert_display(char const * text, char const * file, int line)
 {
     if (_CrtDbgReport(_CRT_ERROR, file, line, NULL, text))
-    {
         _CrtDbgBreak();
-    }
 
     return true;
 }
@@ -45,9 +43,7 @@ inline void assert_memset_valid_imp(size_t size, signed v, char const * file, in
     if (((v < -128) || (v > 127)) || ((size != 1) && (v != 0) && (v != -1)))
     {
         if (_CrtDbgReport(_CRT_ERROR, file, line, NULL, "Invalid memset parameters"))
-        {
             _CrtDbgBreak();
-        }
     }
 }
 
@@ -56,9 +52,7 @@ inline void assert_memset_valid_imp(size_t size, unsigned v, char const * file, 
     if ((v > 255) || ((size != 1) && (v != 0)))
     {
         if (_CrtDbgReport(_CRT_ERROR, file, line, NULL, "Invalid memset parameters"))
-        {
             _CrtDbgBreak();
-        }
     }
 }
 
@@ -72,7 +66,7 @@ inline void assert_pointer_valid_imp(void const * p, bool null_is_valid, wchar_t
 }
 } // anonymous namespace
 
-#endif // defined( _DEBUG )
+#endif // defined(_DEBUG)
 
 //! This macro asserts that @a v is between @a l and @a h (inclusive)
 //
@@ -92,7 +86,7 @@ inline void assert_pointer_valid_imp(void const * p, bool null_is_valid, wchar_t
 
 #define assert_limits(l, v, h) ((void)0)
 
-#endif // defined( _DEBUG )
+#endif // defined(_DEBUG)
 
 //! This macro asserts that a call to memset with the specified value and destination will work as expected.
 //
@@ -120,7 +114,7 @@ inline void assert_pointer_valid_imp(void const * p, bool null_is_valid, wchar_t
 
 #define assert_memset_valid(d, v) ((void)0)
 
-#endif // defined( _DEBUG )
+#endif // defined(_DEBUG)
 
 //! This macro asserts that a pointer is valid
 //
@@ -139,7 +133,7 @@ inline void assert_pointer_valid_imp(void const * p, bool null_is_valid, wchar_t
 
 #define assert_pointer_valid(p, n) ((void)0)
 
-#endif // defined( _DEBUG )
+#endif // defined(_DEBUG)
 
 //! This macro asserts that the @e relative difference between @a x and @a y is less than @a e.
 //
@@ -163,7 +157,7 @@ inline void assert_pointer_valid_imp(void const * p, bool null_is_valid, wchar_t
 
 #define assert_almost_equal(x, y, e) ((void)0)
 
-#endif // defined( _DEBUG )
+#endif // defined(_DEBUG)
 
 //! This macro asserts that @a i is a valid array index for the array @a a.
 //
@@ -185,7 +179,7 @@ inline void assert_pointer_valid_imp(void const * p, bool null_is_valid, wchar_t
 
 #define assert_array_index_valid(a, i) ((void)0)
 
-#endif // defined( _DEBUG )
+#endif // defined(_DEBUG)
 
 //! This macro asserts that @a i is 0 or a power of two
 //
@@ -203,7 +197,7 @@ inline void assert_pointer_valid_imp(void const * p, bool null_is_valid, wchar_t
 
 #define assert_power_of_two(i) ((void)0)
 
-#endif // defined( _DEBUG )
+#endif // defined(_DEBUG)
 
 //! This macro asserts that @a v is aligned on a boundary of @a n
 //
@@ -223,7 +217,7 @@ inline void assert_pointer_valid_imp(void const * p, bool null_is_valid, wchar_t
 
 #define assert_aligned(v, n) ((void)0)
 
-#endif // defined( _DEBUG )
+#endif // defined(_DEBUG)
 
 //@}
 

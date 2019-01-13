@@ -24,7 +24,7 @@
 
 #define ASSERT_LIMITS(l, v, h)
 
-#endif // defined( _DEBUG )
+#endif // defined(_DEBUG)
 
 //! This macro asserts that a call to memset with the specified value and destination will work as expected.
 //!
@@ -54,9 +54,7 @@
 inline void _assert_memset_valid_imp(int size, signed v, char const * file, int line)
 {
     if (!(((v >= -128) && (v <= 128)) && ((size == 1) || (v == 0) || (v == -1))) && AfxAssertFailedLine(file, line))
-    {
         AfxDebugBreak();
-    }
 }
 
 //! @internal
@@ -65,16 +63,14 @@ inline void _assert_memset_valid_imp(int size, signed v, char const * file, int 
 inline void _assert_memset_valid_imp(int size, unsigned v, char const * file, int line)
 {
     if (!(((v >= 0) && (v <= 255)) && ((size == 1) || (v == 0))) && AfxAssertFailedLine(file, line))
-    {
         AfxDebugBreak();
-    }
 }
 
 #else // defined ( _DEBUG )
 
 #define ASSERT_MEMSET_VALID(d, v)
 
-#endif // defined( _DEBUG )
+#endif // defined(_DEBUG)
 
 //! This macro asserts that a pointer is valid
 //!
@@ -99,7 +95,7 @@ inline void _assert_memset_valid_imp(int size, unsigned v, char const * file, in
 
 #define ASSERTP(p, n)
 
-#endif // defined( _DEBUG )
+#endif // defined(_DEBUG)
 
 //! This macro asserts that the @e relative difference between @a x and @a y is less than @a e.
 //!
@@ -127,7 +123,7 @@ inline void _assert_memset_valid_imp(int size, unsigned v, char const * file, in
 
 #define ASSERT_ALMOST_EQUAL(x, y, e)
 
-#endif // defined( _DEBUG )
+#endif // defined(_DEBUG)
 
 //! This macro asserts that @a i is a valid array index for the array @a a.
 //!
@@ -153,7 +149,7 @@ inline void _assert_memset_valid_imp(int size, unsigned v, char const * file, in
 
 #define ASSERT_ARRAY_INDEX_VALID(a, i)
 
-#endif // defined( _DEBUG )
+#endif // defined(_DEBUG)
 
 //! This macro asserts that @a i is non-negative, and 0 or a power of two
 //!
@@ -176,4 +172,4 @@ inline void _assert_memset_valid_imp(int size, unsigned v, char const * file, in
 
 #define ASSERT_POWER_OF_TWO(i)
 
-#endif // defined( _DEBUG )
+#endif // defined(_DEBUG)

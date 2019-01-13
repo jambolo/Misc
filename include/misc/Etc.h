@@ -27,10 +27,10 @@ namespace std
 //! A Unicode-selectable string type.
 
 #if defined(_UNICODE)
-typedef std::wstring tstring;
+    typedef std::wstring tstring;
 #else // defined( _UNICODE )
-typedef std::string tstring;
-#endif // defined( _UNICODE )
+    typedef std::string tstring;
+#endif // defined(_UNICODE)
 } // namespace std
 
 //! Converts the value of a compile-time symbol to a string at compile-time.
@@ -38,7 +38,7 @@ typedef std::string tstring;
 //!
 //! @hideinitializer
 
-#define STRINGIZE(something) STRINGIZE_HELPER(something)
+#define STRINGIZE(something)        STRINGIZE_HELPER(something)
 #define STRINGIZE_HELPER(something) #something
 
 //@}

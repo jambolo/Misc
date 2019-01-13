@@ -24,4 +24,4 @@ void trace(char const * format, ...)
     OutputDebugString(text);
 }
 
-#endif // defined( _DEBUG )
+#endif // defined(_DEBUG)

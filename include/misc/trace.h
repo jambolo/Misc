@@ -32,9 +32,9 @@ void trace(char const * format, ...);
 
 // Release version is optimized away
 
-#define trace   0 && __BiteMe__
+#define trace 0 && __BiteMe__
 inline int __BiteMe__(char const *, ...) { return 0; }
 
-#endif // defined( _DEBUG )
+#endif // defined(_DEBUG)
 
 #endif // !defined(trace_h__)
