@@ -1,6 +1,6 @@
 #if defined(_DEBUG)
 
-#include "misc/trace.h"
+#include "trace.h"
 
 #include <cstdarg>
 #include <cstdio>

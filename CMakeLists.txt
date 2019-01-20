@@ -1,6 +1,7 @@
 cmake_minimum_required (VERSION 3.4)
-project(misc CXX)
+project(Misc CXX)
 
+option(${PROJECT_NAME}_BUILD_UNIT_TESTS "Build unit tests for ${PROJECT_NAME}" FALSE)
 option(BUILD_SHARED_LIBS "Build libraries as DLLs" FALSE)
 
 set(${PROJECT_NAME}_DOXYGEN_OUTPUT_DIRECTORY "" CACHE PATH "Doxygen output directory (empty to disable)")
@@ -24,6 +25,11 @@ endif()
 
 set(PUBLIC_INCLUDE_PATHS
     include
+)
+
+set(PRIVATE_INCLUDE_PATHS
+    .
+    include/Misc
 )
 
 set(SOURCES
@@ -51,6 +57,6 @@ target_compile_definitions(${PROJECT_NAME}
         -D_SECURE_SCL=0
         -D_SCL_SECURE_NO_WARNINGS
 )
-target_include_directories(${PROJECT_NAME} PUBLIC ${PUBLIC_INCLUDE_PATHS})
+target_include_directories(${PROJECT_NAME} PUBLIC ${PUBLIC_INCLUDE_PATHS} PRIVATE ${PRIVATE_INCLUDE_PATHS})
 
 add_subdirectory(unit-test)

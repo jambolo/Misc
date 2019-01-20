@@ -1,4 +1,4 @@
-#include "Misc/Random.h"
+#include "Random.h"
 
 //!
 //! @param	seed	Initial seed.

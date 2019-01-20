@@ -1,22 +1,23 @@
 cmake_minimum_required (VERSION 3.4)
 
-set(INCLUDE_PATHS
-    ${PROJECT_SOURCE_DIR}/include
-)
+if (${PROJECT_NAME}_BUILD_UNIT_TESTS)
 
-set(SOURCES
-    unit-test.cpp
-)
+    set(EXE ${PROJECT_NAME}-test)
+    
+    set(SOURCES
+        unit-test.cpp
+    )
 
-add_executable(unit-test ${SOURCES})
-target_compile_definitions(unit-test
-    PRIVATE
-        -DNOMINMAX
-        -DWIN32_LEAN_AND_MEAN
-        -DVC_EXTRALEAN
-        -D_CRT_SECURE_NO_WARNINGS
-        -D_SECURE_SCL=0
-        -D_SCL_SECURE_NO_WARNINGS
-)
-target_include_directories(unit-test PRIVATE ${INCLUDE_PATHS})
-target_link_libraries(unit-test misc)
+    add_executable(${EXE} ${SOURCES})
+    target_compile_definitions(${EXE}
+        PRIVATE
+            -DNOMINMAX
+            -DWIN32_LEAN_AND_MEAN
+            -DVC_EXTRALEAN
+            -D_CRT_SECURE_NO_WARNINGS
+            -D_SECURE_SCL=0
+            -D_SCL_SECURE_NO_WARNINGS
+    )
+    target_link_libraries(${EXE} ${PROJECT_NAME})
+
+endif(${PROJECT_NAME}_BUILD_UNIT_TESTS)
