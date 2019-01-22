@@ -3,8 +3,8 @@
 #if !defined(Random_h__)
 #define Random_h__
 
-#include <cstdint>
 #include <cstddef>
+#include <cstdint>
 
 //! A class that defines the standard interface for RNG classes.
 //
@@ -19,24 +19,24 @@
 //!						will generate identical sequences.
 //!
 //! The I class must implement the following methods:
-//!		- @c get -		Returns the next number in the sequence.
-//!		- @c state -	Returns the current state.
-//!		- @c setState -	Sets the state to the specified value.
+//!		- @c operator () -	Returns the next number in the sequence.
+//!		- @c state -	    Returns the current state.
+//!		- @c setState -	    Sets the state to the specified value.
 
 template <typename V, typename S, typename I>
 class IRandom
 {
 public:
 
-    typedef V Value;                              //!< The type of the values returned by the RNG.
-    typedef S Seed;                               //!< The type of the seed value.
-    typedef I Implementation;                     //!< The implementation class.
-    typedef typename Implementation::State State; //!< The type of the state.
+    using Value          = V;                     //!< The type of the values returned by the RNG.
+    using Seed           = S;                     //!< The type of the seed value.
+    using Implementation = I;                     //!< The implementation class.
+    using State          = typename Implementation::State; //!< The type of the state.
 
     //! Constructor.
     //!
     //! @param	seed		Initial seed.
-    IRandom(Seed seed)
+    IRandom(Seed const & seed)
         : implementation_(seed)
     {
     }
@@ -73,7 +73,7 @@ public:
     }
 
     //! Returns the state.
-    State const & state() const
+    State state() const
     {
         return implementation_.state();
     }
@@ -94,16 +94,16 @@ private:
 //! In this implementation of an LCG, M is 2^32. This is a reasonable value, and it has the advantage that the
 //! "mod M" operation is done automatically by the CPU when the other operations overflow.
 //!
-//! @note	This class is used to implement Random and cannot be instantiated by itself.
+//! @note	This class is used to implement Random and is not designed be instantiated by itself.
 
 template <uint32_t A, uint32_t B>
 class LCG32
 {
 public:
 
-    typedef uint32_t Value; //!< The type of the values returned by this RNG.
-    typedef uint32_t Seed;  //!< The type of the seed value.
-    typedef uint32_t State; //!< The type of the state.
+    using Value = uint32_t; //!< The type of the values returned by this RNG.
+    using Seed  = uint32_t; //!< The type of the seed value.
+    using State = uint32_t; //!< The type of the state.
 
     enum
     {
@@ -166,7 +166,7 @@ public:
     struct State
     {
         uint32_t v[N];  //!< The state vector.
-        int      index; //!< The index into the state vector of the current value.
+        int index;      //!< The index into the state vector of the current value.
     };
 
     //!	Constructor.
@@ -176,10 +176,10 @@ public:
     uint32_t operator ()();
 
     //!	Sets the state.
-    void setState(State const & state);
+    void setState(State const & state) { state_ = state; }
 
     //! Returns the state.
-    State const & state() const;
+    State state() const { return state_; }
 
 private:
 
@@ -189,20 +189,25 @@ private:
     static uint32_t const C = 0xefc60000;
 
     void        reload();
-    static void reloadElement(uint32_t * p0, uint32_t s1, uint32_t sm);
+    static void reloadElement(uint32_t * p0, uint32_t s1, uint32_t sm)
+    {
+        uint32_t const s0 = *p0;
+
+        *p0 = sm ^ (((s0 & 0x80000000U) | (s1 & 0x7fffffffU)) >> 1) ^ (-(int)(s1 & 0x00000001) & A);
+    }
 
     State state_; //!< The state of the generator.
 };
 
 //! A good LCG implementation.
-//
+//!
 //!
 //! @note	This class is used to implement Random and cannot be instantiated by itself.
 
 using LCG = LCG32<3039177861, 1>;
 
 //! A LCG pseudo-random number generator that generates 32-bit unsigned ints.
-//
+//!
 //! @warning	If the parameter @a y to the single-parameter function operator()() is small, the result is not very random.
 //! @warning	If the difference between the parameters @a x and @a y to the two-parameter function operator () () is small,
 //!				the result is not very random.
@@ -211,15 +216,15 @@ using LCG = LCG32<3039177861, 1>;
 
 using Random = IRandom<uint32_t, uint32_t, LCG>;
 
-//! Super-duper
-//
+//! Super-duper.
+//!
 //! @warning	If the parameter @a y to the single-parameter function operator()() is small, the result is not very random.
 //! @warning	If the difference between the parameters @a x and @a y to the two-parameter function operator()() is small,
 //!				the result is not very random.
 //!
 //! @note	See Random for interface details.
 
-using Random69 = IRandom<uint32_t, uint32_t, LCG32<69069, 1> >;
+using Random69 = IRandom<uint32_t, uint32_t, LCG32<69069, 1>>;
 
 //! A Mersenne Twister pseudo-random number generator that generates 32-bit unsigned ints.
 //!
@@ -235,6 +240,34 @@ using RandomFloat = IRandom<float, uint32_t, LCG>;
 
 // Inline functions
 
-#include "Random.inl"
+#include <cfloat>
+#include <cstdint>
+
+//! Returns a random value the range [0,1).
+
+template <>
+inline RandomFloat::Value RandomFloat::operator ()()
+{
+    // In order to prevent rounding to 1, we must only allow as much precision as a float can handle.
+    // floats only have 24 bits of precision so we have a choice of which bits to use. In a 32-bit LCG, the most
+    // random bits are somewhere around bit 23. Since a float's high-order bits are the most important, let's
+    // use bits 22-0.
+    // Note: The lower-order bits of values produced by a LCG are not random. Fortunately, in normal usage, the
+    // lower bits of a float are not significant.
+
+    int const      PRECISION = FLT_MANT_DIG;    // Bits of precision in a float mantissa
+    uint32_t const MASK      = (1 << PRECISION) - 1; // Only bits that count
+
+    return Value(implementation_() & MASK) / Value(MASK + 1);
+}
+
+//! Returns a random value in the range [ @a x, @a y ).
+
+template <>
+inline RandomFloat::Value RandomFloat::operator ()(Value x, Value y)
+{
+    // operator()() returns [0,1) so this function must be specialized.
+    return operator ()() * (y - x) + x;
+}
 
 #endif // !defined(Random_h__)

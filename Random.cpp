@@ -21,9 +21,7 @@ MT::MT(uint32_t seed)
 uint32_t MT::operator ()()
 {
     if (state_.index >= N)
-    {
         reload();
-    }
 
     uint32_t y = state_.v[state_.index++];
 
@@ -39,7 +37,7 @@ void MT::reload()
 {
     uint32_t * const v = state_.v; // Convenience
 
-    int j;
+    int        j;
     uint32_t * p0;
     uint32_t * pM;
 

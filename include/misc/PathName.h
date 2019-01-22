@@ -32,14 +32,10 @@ struct char_traits_path_char : public std::char_traits<char>
     static bool __cdecl eq_int_type(const int_type & _Left, const int_type & _Right)
     {
         if (_Left == _Right)
-        {
             return true;
-        }
 
         if (!not_eof(_Left) || !not_eof(_Right))
-        {
             return false;
-        }
 
         return eq(to_char_type(_Left), to_char_type(_Right));
     }
@@ -54,17 +50,11 @@ struct char_traits_path_char : public std::char_traits<char>
         }
 
         if (_Count <= 0)
-        {
             return 0;
-        }
         else if (lt(*_First1, *_First2))
-        {
             return -1;
-        }
         else
-        {
             return +1;
-        }
     }
 
     static const char * __cdecl find(const char * _First, size_t _Count, char _Ch)
@@ -76,13 +66,9 @@ struct char_traits_path_char : public std::char_traits<char>
         }
 
         if (_Count <= 0)
-        {
             return 0;
-        }
         else
-        {
             return _First;
-        }
     }
 
     //@}
