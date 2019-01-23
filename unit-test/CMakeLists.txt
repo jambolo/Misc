@@ -3,7 +3,7 @@ cmake_minimum_required (VERSION 3.4)
 if (${PROJECT_NAME}_BUILD_UNIT_TESTS)
 
     set(EXE ${PROJECT_NAME}-test)
-    
+
     set(SOURCES
         unit-test.cpp
     )
@@ -19,5 +19,5 @@ if (${PROJECT_NAME}_BUILD_UNIT_TESTS)
             -D_SCL_SECURE_NO_WARNINGS
     )
     target_link_libraries(${EXE} ${PROJECT_NAME})
-
+    
 endif(${PROJECT_NAME}_BUILD_UNIT_TESTS)
