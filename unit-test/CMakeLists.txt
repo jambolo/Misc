@@ -19,5 +19,6 @@ if (${PROJECT_NAME}_BUILD_UNIT_TESTS)
             -D_SCL_SECURE_NO_WARNINGS
     )
     target_link_libraries(${EXE} ${PROJECT_NAME})
-    
+    source_group(Sources FILES ${SOURCES})
+
 endif(${PROJECT_NAME}_BUILD_UNIT_TESTS)

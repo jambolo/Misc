@@ -58,4 +58,6 @@ target_compile_definitions(${PROJECT_NAME}
 )
 target_include_directories(${PROJECT_NAME} PUBLIC ${PUBLIC_INCLUDE_PATHS} PRIVATE ${PRIVATE_INCLUDE_PATHS})
 
+source_group(Sources FILES ${SOURCES})
+
 add_subdirectory(unit-test)
