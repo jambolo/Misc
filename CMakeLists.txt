@@ -1,7 +1,7 @@
 cmake_minimum_required (VERSION 3.4)
 project(Misc CXX)
 
-option(${PROJECT_NAME}_BUILD_UNIT_TESTS "Build unit tests for ${PROJECT_NAME}" FALSE)
+option(${PROJECT_NAME}_BUILD_TESTS "Build unit tests for ${PROJECT_NAME} if BUILD_TESTING is ON" FALSE)
 option(BUILD_SHARED_LIBS "Build libraries as DLLs" FALSE)
 
 set(${PROJECT_NAME}_DOXYGEN_OUTPUT_DIRECTORY "" CACHE PATH "Doxygen output directory (empty to disable)")
@@ -36,15 +36,16 @@ set(SOURCES
     include/Misc/AfxAssert.h
     include/Misc/Assert.h
     include/Misc/Etc.h
-    include/Misc/exceptions.h
+    include/Misc/Exceptions.h
     include/Misc/PathName.h
     include/Misc/Random.h
     include/Misc/Singleton.h
-    include/Misc/trace.h
+    include/Misc/Trace.h
     
     Random.cpp
-    trace.cpp
+    Trace.cpp
 )
+source_group(Sources FILES ${SOURCES})
 
 add_library(${PROJECT_NAME} ${SOURCES})
 target_compile_definitions(${PROJECT_NAME}
@@ -57,7 +58,10 @@ target_compile_definitions(${PROJECT_NAME}
         -D_SCL_SECURE_NO_WARNINGS
 )
 target_include_directories(${PROJECT_NAME} PUBLIC ${PUBLIC_INCLUDE_PATHS} PRIVATE ${PRIVATE_INCLUDE_PATHS})
+target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_17)
+set_target_properties(${PROJECT_NAME} PROPERTIES CXX_EXTENSIONS OFF)
 
-source_group(Sources FILES ${SOURCES})
-
-add_subdirectory(unit-test)
+if(${PROJECT_NAME}_BUILD_TESTS)
+    enable_testing()
+    add_subdirectory(test)
+endif()

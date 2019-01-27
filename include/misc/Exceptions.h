@@ -1,7 +1,7 @@
 #pragma once
 
-#if !defined(exceptions_h__)
-#define exceptions_h__
+#if !defined(MiSC_EXCEPTIONS_H)
+#define MiSC_EXCEPTIONS_H
 
 #include <stdexcept>
 #include <string>
@@ -12,23 +12,25 @@ class ConstructorFailedException : public std::runtime_error
 {
 public:
 
-    // Constructor
+    //! Constructor.
     //!
     //! @param	what_arg	Exception information text
 
-    ConstructorFailedException(char const * what_arg = "constructor failed") throw ()
+    explicit ConstructorFailedException(char const * what_arg = "constructor failed") throw ()
         : std::runtime_error(what_arg)
     {
     }
 
-    // Constructor
+    //! Constructor.
     //!
     //! @param	what_arg	Exception information text
 
-    ConstructorFailedException(std::string const & what_arg) throw ()
+    explicit ConstructorFailedException(std::string const & what_arg) throw ()
         : std::runtime_error(what_arg)
     {
     }
+
+    virtual ~ConstructorFailedException() override = default;
 };
 
-#endif // !defined(exceptions_h__)
+#endif // !defined(MiSC_EXCEPTIONS_H)

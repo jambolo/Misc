@@ -19,14 +19,14 @@ struct char_traits_path_char : public std::char_traits<char>
     static bool __cdecl eq(char _Left, char _Right)
     {
         return _Left == _Right ||
-               is_slash(_Left) && is_slash(_Right) ||
+               (is_slash(_Left) && is_slash(_Right)) ||
                std::toupper(_Left, std::locale()) == std::toupper(_Right, std::locale());
     }
 
     static bool __cdecl lt(char _Left, char _Right)
     {
         return (!is_slash(_Left) || !is_slash(_Right)) &&
-               _Left std::toupper(_Left, std::locale()) < std::toupper(_Right, std::locale());
+                std::toupper(_Left, std::locale()) < std::toupper(_Right, std::locale());
     }
 
     static bool __cdecl eq_int_type(const int_type & _Left, const int_type & _Right)
