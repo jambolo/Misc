@@ -1,7 +1,6 @@
-cmake_minimum_required (VERSION 3.4)
+cmake_minimum_required (VERSION 3.10)
 project(Misc CXX)
 
-option(${PROJECT_NAME}_BUILD_TESTS "Build unit tests for ${PROJECT_NAME} if BUILD_TESTING is ON" FALSE)
 option(BUILD_SHARED_LIBS "Build libraries as DLLs" FALSE)
 
 set(${PROJECT_NAME}_DOXYGEN_OUTPUT_DIRECTORY "" CACHE PATH "Doxygen output directory (empty to disable)")
@@ -61,7 +60,10 @@ target_compile_definitions(${PROJECT_NAME}
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_17)
 set_target_properties(${PROJECT_NAME} PROPERTIES CXX_EXTENSIONS OFF)
 
-if(${PROJECT_NAME}_BUILD_TESTS)
-    enable_testing()
-    add_subdirectory(test)
+if (CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
+    include(CTest)
+    message(STATUS "Testing is enabled. Turn on BUILD_TESTING to build tests.")
+    if(BUILD_TESTING)
+        add_subdirectory(test)
+    endif()
 endif()
