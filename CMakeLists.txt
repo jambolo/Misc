@@ -36,11 +36,15 @@ set(SOURCES
     include/Misc/Assertx.h
     include/Misc/Etc.h
     include/Misc/Exceptions.h
+    include/Misc/FrameAllocator.h
     include/Misc/PathName.h
+    include/Misc/Pool.h
     include/Misc/Random.h
     include/Misc/Singleton.h
     include/Misc/Trace.h
     
+    FrameAllocator.cpp
+    Pool.cpp
     Random.cpp
     Trace.cpp
 )
