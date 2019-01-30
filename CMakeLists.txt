@@ -33,20 +33,26 @@ set(PRIVATE_INCLUDE_PATHS
 set(SOURCES
     include/Misc/AfxAssert.h
     include/Misc/Assertx.h
+    include/Misc/Clock.h
     include/Misc/CommandLineList.h
     include/Misc/Etc.h
     include/Misc/Exceptions.h
     include/Misc/FrameAllocator.h
+    include/Misc/FrameRateCalculator.h
     include/Misc/PathName.h
     include/Misc/Pool.h
     include/Misc/Random.h
     include/Misc/Singleton.h
+    include/Misc/Timer.h
     include/Misc/Trace.h
     
+    Clock.cpp
     CommandLineList.cpp
     FrameAllocator.cpp
+    FrameRateCalculator.cpp
     Pool.cpp
     Random.cpp
+    Timer.cpp
     Trace.cpp
 )
 source_group(Sources FILES ${SOURCES})
