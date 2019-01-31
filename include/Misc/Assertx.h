@@ -1,7 +1,7 @@
 #pragma once
 
-#if !defined(Assert_h__)
-#define Assert_h__
+#if !defined(MISC_ASSERTX_H)
+#define MISC_ASSERTX_H
 
 #if defined(_DEBUG)
 
@@ -15,7 +15,7 @@
 
 //! @name	Asserts
 //!
-//! This file contains the following asserts:
+//! This file contains the following assertions:
 //!		- assert_limits( l, v, h )			asserts that l <= v <= h
 //!		- assert_memset_valid( d, v )		asserts that memset( d, v, n ) is valid
 //!		- assert_pointer_valid( p, n )		asserts that p is a valid pointer
@@ -58,8 +58,8 @@ inline void assert_memset_valid_imp(size_t size, unsigned v, char const * file, 
 
 inline void assert_pointer_valid_imp(void const * p, bool null_is_valid, wchar_t const * file, int line, wchar_t const * text)
 {
-    if (((p == 0) && !null_is_valid) ||
-        ((p != 0) && (IsBadReadPtr(p, 1) || IsBadWritePtr((LPVOID)p, 1) || IsBadCodePtr((FARPROC)p))))
+    if (((p == nullptr) && !null_is_valid) ||
+        ((p != nullptr) && (IsBadReadPtr(p, 1) || IsBadWritePtr((LPVOID)p, 1) || IsBadCodePtr((FARPROC)p))))
     {
         _wassert(text, file, line);
     }
@@ -221,4 +221,4 @@ inline void assert_pointer_valid_imp(void const * p, bool null_is_valid, wchar_t
 
 //@}
 
-#endif // !defined(Assert_h__)
+#endif // !defined(MISC_ASSERTX_H)

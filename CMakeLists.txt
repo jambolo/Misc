@@ -33,7 +33,7 @@ set(PRIVATE_INCLUDE_PATHS
 
 set(SOURCES
     include/Misc/AfxAssert.h
-    include/Misc/Assert.h
+    include/Misc/Assertx.h
     include/Misc/Etc.h
     include/Misc/Exceptions.h
     include/Misc/PathName.h

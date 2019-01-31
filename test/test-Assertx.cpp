@@ -1,8 +1,8 @@
-#include "Misc/Assert.h"
+#include "Misc/Assertx.h"
 
 #include "gtest/gtest.h"
 
-TEST(AssertTest, Placeholder)
+TEST(AssertxTest, Placeholder)
 {
     EXPECT_TRUE(false);
 }
