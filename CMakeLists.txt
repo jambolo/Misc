@@ -34,6 +34,7 @@ set(PRIVATE_INCLUDE_PATHS
 set(SOURCES
     include/Misc/AfxAssert.h
     include/Misc/Assertx.h
+    include/Misc/CommandLineList.h
     include/Misc/Etc.h
     include/Misc/Exceptions.h
     include/Misc/FrameAllocator.h
@@ -43,6 +44,7 @@ set(SOURCES
     include/Misc/Singleton.h
     include/Misc/Trace.h
     
+    CommandLineList.cpp
     FrameAllocator.cpp
     Pool.cpp
     Random.cpp
