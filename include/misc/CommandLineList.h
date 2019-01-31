@@ -1,33 +1,40 @@
-#if !defined( COMMANDLINELIST_H_INCLUDED )
-#define COMMANDLINELIST_H_INCLUDED
-
 #pragma once
 
-/*****************************************************************************
+#if !defined(MISC_COMMANDLINELIST_H)
+#define MISC_COMMANDLINELIST_H
 
-                              CommandLineList.h
-
-						Copyright 2001, John J. Bolton
-	----------------------------------------------------------------------
-
-	$Header: //depot/Libraries/CommandLineList/CommandLineList.h#2 $
-
-	$NoKeywords: $
-
-*****************************************************************************/
-
-#include <vector>
 #include <string>
+#include <vector>
 
-class CommandLineList : public std::vector< std::string >
+class CommandLineList
 {
 public:
-	CommandLineList( char const * pCommandLine );
-	CommandLineList( int argc, char const * const * argv );
 
-	// Expand an arg and add the result to the list. If the arg can't be
-	// expanded or contains no wildcards, it is added as is.
-	void Include( char const *pArg );
+    //! Constructor.
+    //!
+    //! @param  commandLine     Command line as a single string
+    CommandLineList(char const * commandLine);
+
+    //! Constructor.
+    //!
+    //! @param  argc    argc parameter
+    //! @param  argv    argv parameter
+    CommandLineList(int argc, char ** argv);
+
+    //! Expand an arg and add the result to the list.
+    //!
+    //! If the arg can't be expanded or contains no wildcards, it is added as is.
+    //!
+    //! @param  arg     argument string
+    void include(char const * arg);
+
+    //! Returns the number of parsed command line tokens
+    size_t argc() const { return args_.size(); }
+
+    //! Returns the parsed command line tokens
+    std::vector<std::string> args() const { return args_; }
+
+    std::vector<std::string> args_;
 };
 
-#endif // !defined( COMMANDLINELIST_H_INCLUDED )
+#endif // !defined(MISC_COMMANDLINELIST_H)

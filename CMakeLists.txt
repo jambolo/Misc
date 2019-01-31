@@ -29,6 +29,7 @@ set(PUBLIC_INCLUDE_PATHS
 set(SOURCES
     include/Misc/AfxAssert.h
     include/Misc/Assert.h
+    include/Misc/CommandLineList.h
     include/Misc/Etc.h
     include/Misc/exceptions.h
     include/Misc/PathName.h
@@ -37,6 +38,7 @@ set(SOURCES
     include/Misc/Singleton.h
     include/Misc/trace.h
     
+    CommandLineList.cpp
     Random.cpp
     trace.cpp
 )
