@@ -9,7 +9,7 @@
 //!
 //!	Derive from this class privately.
 //!
-//!	Implement a function that returns the instance of the derived class and instantiates as follows (where @c T is
+//!	Implement a function that returns the instance of the derived class and instantiates as follows (where T is
 //! is the name of the derived class):
 //! @code
 //!			static T & T::Instance()

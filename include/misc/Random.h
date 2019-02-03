@@ -15,13 +15,13 @@
 //! @param	I	The implementation class.
 //!
 //! The I class must implement the following type:
-//!		- @c State -	The state of the RNG. The state must contain enough information such that identical states
+//!		- State -	The state of the RNG. The state must contain enough information such that identical states
 //!						will generate identical sequences.
 //!
 //! The I class must implement the following methods:
-//!		- @c operator () -	Returns the next number in the sequence.
-//!		- @c state -	    Returns the current state.
-//!		- @c setState -	    Sets the state to the specified value.
+//!		- operator () -	Returns the next number in the sequence.
+//!		- state -	    Returns the current state.
+//!		- setState -	    Sets the state to the specified value.
 
 template <typename V, typename S, typename I>
 class IRandom
@@ -120,7 +120,7 @@ public:
     {
     }
 
-    //! Returns a random value in the range [ @c MIN, @c MAX ).
+    //! Returns a random value in the range [ MIN, MAX ).
     uint32_t operator ()()
     {
         //	seed_ = static_cast< uint32_t >( ( A * static_cast< uint64 >( m_Seed ) + B ) % M );
@@ -172,7 +172,7 @@ public:
     //!	Constructor.
     MT(uint32_t seed);
 
-    //!	Returns	a random value (@c MIN	<= operator () () < @c MAX).
+    //!	Returns	a random value (MIN	<= operator () () < MAX).
     uint32_t operator ()();
 
     //!	Sets the state.

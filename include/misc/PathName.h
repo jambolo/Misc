@@ -6,7 +6,7 @@
 #include <locale>
 #include <string>
 
-//! A variation of @c std::char_traits for characters in a path name.
+//! A variation of std::char_traits for characters in a path name.
 //!
 //! The difference between these traits and <tt>std::char_traits< char ></tt> is that comparisons are
 //! case-independent, and '\' and '/' are equivalent. This struct is used by the class PathName
@@ -26,7 +26,7 @@ struct char_traits_path_char : public std::char_traits<char>
     static bool __cdecl lt(char _Left, char _Right)
     {
         return (!is_slash(_Left) || !is_slash(_Right)) &&
-                std::toupper(_Left, std::locale()) < std::toupper(_Right, std::locale());
+               std::toupper(_Left, std::locale()) < std::toupper(_Right, std::locale());
     }
 
     static bool __cdecl eq_int_type(const int_type & _Left, const int_type & _Right)
@@ -73,7 +73,7 @@ struct char_traits_path_char : public std::char_traits<char>
 
     //@}
 
-    //! Returns @c true if the character is a slash or backslash
+    //! Returns true if the character is a slash or backslash
     //
     //!
     //! @param	c	character to test

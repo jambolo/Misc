@@ -6,7 +6,7 @@
 //! Outputs to the debugger only in a DEBUG build.
 //!
 //! When compiling a debug version, the trace function outputs to the debugger. The parameters and format string
-//! are the same as @c printf().
+//! are the same as printf().
 //!
 //! When compiling a release version, the trace call is optimized out. It is a clever hack. For example, the
 //! statement @code
@@ -22,7 +22,7 @@
 //! @param	...		parameters
 //!
 //! @note	The size of the output is limited to 1024 bytes at a time.
-//! @note	If you are using MFC, you should use the MFC @c TRACE() functions, instead of trace().
+//! @note	If you are using MFC, you should use the MFC TRACE() functions, instead of trace().
 
 #if defined(_DEBUG)
 

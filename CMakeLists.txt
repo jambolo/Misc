@@ -2,7 +2,6 @@ cmake_minimum_required (VERSION 3.10)
 project(Misc CXX)
 
 option(BUILD_SHARED_LIBS "Build libraries as DLLs" FALSE)
-
 set(${PROJECT_NAME}_DOXYGEN_OUTPUT_DIRECTORY "" CACHE PATH "Doxygen output directory (empty to disable)")
 
 if(${PROJECT_NAME}_DOXYGEN_OUTPUT_DIRECTORY)

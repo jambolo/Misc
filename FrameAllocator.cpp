@@ -39,7 +39,7 @@ FrameAllocator::~FrameAllocator()
 //!
 //! @param	size	Number of bytes to allocate
 //!
-//! @return		Allocated memory, or nullptr0 if the space could not be allocated
+//! @return		Address of allocated memory
 //!
 //! @note	In the Debug configuration, the allocated bytes are initialized to 0xCD
 void * FrameAllocator::allocate(size_t size)
@@ -54,13 +54,9 @@ void * FrameAllocator::allocate(size_t size)
 
     // If there is no room for the allocation, throw std::bad_alloc and return nullptr
     if (state_->point - size < state_->buffer)
-    {
         throw std::bad_alloc();
-        return nullptr;
-    }
 
     // Allocate the space
-
     state_->point -= size;
 
 #if defined(_DEBUG)

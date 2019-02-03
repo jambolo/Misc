@@ -39,8 +39,8 @@
 //! @param	v	Value to be set
 //!
 //! @note
-//! Unfortunately, this assert cannot catch all cases of the value fitting in a byte because of @c signed vs.
-//! @c unsigned. For example, 0xffffff80 is not valid as an @c unsigned value but is valid as a @c signed value (-128).
+//! Unfortunately, this assert cannot catch all cases of the value fitting in a byte because of signed vs.
+//! unsigned. For example, 0xffffff80 is not valid as an unsigned value but is valid as a signed value (-128).
 //!
 //! @hideinitializer
 
@@ -75,7 +75,7 @@ inline void _assert_memset_valid_imp(int size, unsigned v, char const * file, in
 //! This macro asserts that a pointer is valid
 //!
 //! @param	p	Pointer value to check
-//!	@param	n	If @c true, 0 is accepted as a valid value, otherwise it is not. This is regardless of whether 0 is
+//!	@param	n	If true, 0 is accepted as a valid value, otherwise it is not. This is regardless of whether 0 is
 //!				actually a valid address or not.
 //!
 //! @hideinitializer

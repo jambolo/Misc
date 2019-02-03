@@ -100,8 +100,8 @@ inline void assert_pointer_valid_imp(void const * p, bool null_is_valid, wchar_t
 //! destination elements is > 1, then the value being set is 0 or -1. Only 0 and -1 will work as expected if the
 //! size of the destination elements is more than 1 byte.
 //!
-//! @note	Unfortunately, this assert cannot catch all cases of the value fitting in a byte because of @c signed
-//!			vs. @c unsigned. For example, 0xffffff80 is not valid as an @c unsigned value but is valid as a
+//! @note	Unfortunately, this assert cannot catch all cases of the value fitting in a byte because of signed
+//!			vs. unsigned. For example, 0xffffff80 is not valid as an unsigned value but is valid as a
 //!			@c signed value (-128).
 //!
 //! @hideinitializer
@@ -119,7 +119,7 @@ inline void assert_pointer_valid_imp(void const * p, bool null_is_valid, wchar_t
 //! This macro asserts that a pointer is valid
 //
 //! @param	p	Pointer value to check
-//!	@param	n	If @c true, 0 is accepted as a valid value, otherwise it is not. This is regardless of whether 0 is
+//!	@param	n	If true, 0 is accepted as a valid value, otherwise it is not. This is regardless of whether 0 is
 //!				actually a valid address or not.
 //!
 //! @hideinitializer
