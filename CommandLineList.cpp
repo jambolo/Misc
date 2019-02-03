@@ -1,7 +1,11 @@
 #include "CommandLineList.h"
 
 #include <string>
+#if defined(WIN32)
 #include <windows.h>
+#else
+#include <glob.h>
+#endif
 
 CommandLineList::CommandLineList(char const * commandLine)
 {
@@ -79,6 +83,7 @@ CommandLineList::CommandLineList(int argc, char ** argv)
 
 void CommandLineList::include(char const * arg)
 {
+#if defined(WIN32)
     // Validate the length of the arg. FindFirstFile cannot handle strings
     // longer than MAX_PATH. If the string is too long then add it as is.
 
@@ -128,4 +133,26 @@ void CommandLineList::include(char const * arg)
     {
         args_.push_back(arg);
     }
+#else
+    if (strpbrk(arg, "*?["))
+    {
+        glob_t buffer;
+        if (glob(arg, GLOB_NOCHECK, nullptr, &buffer))
+        {
+            for (char ** p = buffer.gl_pathv; *p; ++p)
+            {
+                args_.push_back(*p);
+            }
+            globfree(&buffer);
+        }
+        else
+        {
+            args_.push_back(arg);
+        }
+    }
+    else
+    {
+        args_.push_back(arg);
+    }
+#endif
 }

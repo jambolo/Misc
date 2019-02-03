@@ -92,39 +92,3 @@ void FrameAllocator::release(Frame frame)
     // Reset the allocation point back to the start of the frame
     state_->point = pFrame;
 }
-
-struct foo
-{
-    int x;
-};
-
-void test()
-{
-    {
-        FrameAllocator allocator(malloc(100), 100);
-
-        FrameAllocator::Frame mark0 = allocator.mark();
-        foo * p = (foo *)allocator.allocate(1);
-        FrameAllocator::Frame mark1 = allocator.mark();
-//        allocator.deallocate(p, 1);
-        allocator.release(mark0);
-    }
-    {
-        TypedFrameAllocator<int> allocator(malloc(100 * sizeof(int)), 100 * sizeof(int));
-
-        FrameAllocator::Frame mark0 = allocator.mark();
-        int * p = allocator.allocate(1);
-        FrameAllocator::Frame mark1 = allocator.mark();
-        allocator.deallocate(p, 1);
-        allocator.release(mark0);
-    }
-    {
-        TypedFrameAllocator<foo> allocator(malloc(100 * sizeof(foo)), 100 * sizeof(foo));
-
-        FrameAllocator::Frame mark0 = allocator.mark();
-        foo * p = allocator.allocate(1);
-        FrameAllocator::Frame mark1 = allocator.mark();
-        allocator.deallocate(p, 1);
-        allocator.release(mark0);
-    }
-}
