@@ -7,7 +7,7 @@
 
 //! A class that measures time durations
 
-class Timer
+class [[deprecated("Use std:chrono instead")]] Timer
 {
 public:
 

@@ -8,7 +8,7 @@
 
 //! A Singleton class that keeps track of the time
 
-class Clock : Singleton<Clock>
+class [[deprecated("Use std:chrono instead")]] Clock : public Singleton<Clock>
 {
 public:
 

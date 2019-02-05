@@ -3,7 +3,7 @@
 #if !defined(MISC_FRAMERATECALCULATOR_H)
 #define MISC_FRAMERATECALCULATOR_H
 
-#include <cstdint>
+#include <chrono>
 
 //! A class that keeps track of the frame rate.
 
@@ -15,7 +15,7 @@ public:
     FrameRateCalculator();
 
     //! Updates the state and computes the new frame rate values.
-    void update(int64_t t);
+    void update(std::chrono::high_resolution_clock::time_point t);
 
     //! Returns the frame rate for the previous frame.
     float rate() const { return frameRate_; }
@@ -27,8 +27,8 @@ public:
 
 private:
 
-    int64_t oldTime_;                  // Time of the previous update
-    int64_t oldTime2_;                 // Time of the previous 1 second update
+    std::chrono::high_resolution_clock::time_point oldTime_;                  // Time of the previous update
+    std::chrono::high_resolution_clock::time_point oldTime2_;                 // Time of the previous 1 second update
     int nFrames_;                      // Number of frames since the previous 1 second update
     float frameRate_;                  // Frame rate of the previous frame
     float averageFrameRate_;           // Frame rate of the previous 1 second interval
