@@ -5,9 +5,11 @@
 
 #include <cstddef>
 #include <cstdint>
+#include <random>
+#include <limits>
 
 //! A class that defines the standard interface for RNG classes.
-//
+//!
 //! This class is used to standardize the interface of random number generator classes.
 //!
 //! @param	V	The type of the values returned by the RNG.
@@ -83,7 +85,9 @@ private:
 };
 
 //! A LCG pseudo-random number generator implementation template that generates 32-bit unsigned ints.
-//
+//!
+//! @deprecated Use std::linear_congruential_engine instead.
+//!
 //! @param	A	Multiplier
 //! @param	B	Offset
 //!
@@ -97,7 +101,7 @@ private:
 //! @note	This class is used to implement Random and is not designed be instantiated by itself.
 
 template <uint32_t A, uint32_t B>
-class LCG32
+class [[deprecated("Use std::linear_congruential_engine<uint32_t> instead")]] LCG32
 {
 public:
 
@@ -151,11 +155,12 @@ private:
 };
 
 //! A Mersenne Twister pseudo-random number generator implementation that generates 32-bit unsigned ints.
-//
+//!
+//! @deprecated Use std::mt19937 instead.
 //!
 //! @note	This class is used to implement Random and cannot be instantiated by itself.
 
-class MT
+class [[deprecated("Use std::mt19937 instead")]] MT
 {
 public:
     static size_t constexpr N     = 624;         //!< The number of elements in the state vector
@@ -201,12 +206,15 @@ private:
 
 //! A good LCG implementation.
 //!
+//! @deprecated Use std::minstd_rand instead.
 //!
 //! @note	This class is used to implement Random and cannot be instantiated by itself.
 
-using LCG = LCG32<3039177861, 1>;
+using LCG [[deprecated("Use std::minstd_rand instead")]] = std::minstd_rand;
 
 //! A LCG pseudo-random number generator that generates 32-bit unsigned ints.
+//!
+//! @deprecated Use std::uniform_int_distribution instead.
 //!
 //! @warning	If the parameter @a y to the single-parameter function operator()() is small, the result is not very random.
 //! @warning	If the difference between the parameters @a x and @a y to the two-parameter function operator () () is small,
@@ -214,9 +222,11 @@ using LCG = LCG32<3039177861, 1>;
 //!
 //! @note	See Random for interface details.
 
-using Random = IRandom<uint32_t, uint32_t, LCG>;
+using Random [[deprecated("Use std::uniform_int_distribution instead")]] = IRandom<uint32_t, uint32_t, std::minstd_rand>;
 
 //! Super-duper.
+//!
+//! @deprecated Use std::uniform_int_distribution instead.
 //!
 //! @warning	If the parameter @a y to the single-parameter function operator()() is small, the result is not very random.
 //! @warning	If the difference between the parameters @a x and @a y to the two-parameter function operator()() is small,
@@ -224,50 +234,84 @@ using Random = IRandom<uint32_t, uint32_t, LCG>;
 //!
 //! @note	See Random for interface details.
 
-using Random69 = IRandom<uint32_t, uint32_t, LCG32<69069, 1>>;
+using Random69 [[deprecated("Use std::uniform_int_distribution instead")]] = IRandom<uint32_t, uint32_t, std::minstd_rand>;
 
 //! A Mersenne Twister pseudo-random number generator that generates 32-bit unsigned ints.
 //!
+//! @deprecated Use std::uniform_int_distribution instead.
+//!
 //! @note	See Random for interface details.
 
-using RandomMT = IRandom<uint32_t, uint32_t, MT>;
+using RandomMT [[deprecated("Use std::uniform_int_distribution instead")]] = IRandom<uint32_t, uint32_t, std::mt19937>;
 
 //! A LCG pseudo-random number generator that generates floats.
 //!
-//! @note	See Random for interface details, however there are small differences.
+//! @deprecated Use std::uniform_real_distribution<float> instead.
+//!
+//! @note    See Random for interface details, however there are small differences.
 
-using RandomFloat = IRandom<float, uint32_t, LCG>;
-
-// Inline functions
-
-#include <cfloat>
-#include <cstdint>
-
-//! Returns a random value the range [0,1).
-
-template <>
-inline RandomFloat::Value RandomFloat::operator ()()
+class [[deprecated("Use std::uniform_real_distribution<float> instead")]] RandomFloat
 {
-    // In order to prevent rounding to 1, we must only allow as much precision as a float can handle.
-    // floats only have 24 bits of precision so we have a choice of which bits to use. In a 32-bit LCG, the most
-    // random bits are somewhere around bit 23. Since a float's high-order bits are the most important, let's
-    // use bits 22-0.
-    // Note: The lower-order bits of values produced by a LCG are not random. Fortunately, in normal usage, the
-    // lower bits of a float are not significant.
+public:
 
-    int const      PRECISION = FLT_MANT_DIG;    // Bits of precision in a float mantissa
-    uint32_t const MASK      = (1 << PRECISION) - 1; // Only bits that count
+    using Value          = float;                     //!< The type of the values returned by the RNG.
+    using Seed           = typename std::minstd_rand::result_type;                     //!< The type of the seed value.
+    using Implementation = std::minstd_rand;                     //!< The implementation class.
+    using State          = typename std::minstd_rand::result_type; //!< The type of the state.
 
-    return Value(implementation_() & MASK) / Value(MASK + 1);
-}
+    //! Constructor.
+    //!
+    //! @param    seed        Initial seed.
+    RandomFloat(Seed const & seed)
+        : generator_(seed)
+    {
+    }
 
-//! Returns a random value in the range [ @a x, @a y ).
+    //! Returns a random float value.
+    Value operator ()()
+    {
+        std::uniform_real_distribution<float> range(-std::numeric_limits<float>::max(),
+                                                     std::numeric_limits<float>::max());
+        return range(generator_);
+    }
 
-template <>
-inline RandomFloat::Value RandomFloat::operator ()(Value x, Value y)
-{
-    // operator()() returns [0,1) so this function must be specialized.
-    return operator ()() * (y - x) + x;
-}
+    //! Returns a random float value in the range [ 0, @a y ).
+    //!
+    //! @param    y    Upper limit.
+    Value operator ()(Value y)
+    {
+        std::uniform_real_distribution<float> range(0.0f, y);
+        return range(generator_);
+    }
+
+    //! Returns a random float value in the range [ @a x, @a y ).
+    //!
+    //! @param    x    Lower limit.
+    //! @param    y    Upper limit.
+    Value operator ()(Value x, Value y)
+    {
+        std::uniform_real_distribution<float> range(x, y);
+        return range(generator_);
+    }
+
+    //! Sets the state.
+    //!
+    //! @param    state    New state.
+    void setState(State const & state)
+    {
+        generator_.seed(state);
+    }
+
+    //! Returns the state.
+    [[deprecated]]
+    State state() const
+    {
+        assert(false); // no longer supported
+        return 1;
+    }
+
+private:
+    std::minstd_rand generator_;
+};
 
 #endif // !defined(Random_h__)
