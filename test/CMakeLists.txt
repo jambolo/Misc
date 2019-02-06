@@ -15,8 +15,20 @@ set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 
 include_directories(googletest/googletest/include)
 
-file(GLOB FILES *.cpp)
-foreach(FILE ${FILES})
+set(SOURCES
+    test-AfxAssert.cpp
+    test-Assertx.cpp
+    test-CommandLineList.cpp
+    test-Etc.cpp
+    test-Exceptions.cpp
+    test-FrameAllocator.cpp
+    test-PathName.cpp
+    test-Pool.cpp
+    test-Singleton.cpp
+    test-Trace.cpp
+)
+
+foreach(FILE ${SOURCES})
     get_filename_component(TEST ${FILE} NAME_WE)
     add_executable(Misc_${TEST} ${FILE})
     target_link_libraries(Misc_${TEST} ${PROJECT_NAME} gtest gtest_main)
