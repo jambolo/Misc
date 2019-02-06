@@ -69,7 +69,7 @@ inline void assert_pointer_valid_imp(void const * p, bool null_is_valid, wchar_t
 #endif // defined(_DEBUG)
 
 //! This macro asserts that @a v is between @a l and @a h (inclusive)
-//
+//!
 //! @param	l,h		Upper and lower limits. @a l must be <= @a h.
 //! @param	v		Value to check
 //!
@@ -89,7 +89,7 @@ inline void assert_pointer_valid_imp(void const * p, bool null_is_valid, wchar_t
 #endif // defined(_DEBUG)
 
 //! This macro asserts that a call to memset with the specified value and destination will work as expected.
-//
+//!
 //! @param	d	Destination address
 //! @param	v	Value to be set
 //!
@@ -117,7 +117,7 @@ inline void assert_pointer_valid_imp(void const * p, bool null_is_valid, wchar_t
 #endif // defined(_DEBUG)
 
 //! This macro asserts that a pointer is valid
-//
+//!
 //! @param	p	Pointer value to check
 //!	@param	n	If true, 0 is accepted as a valid value, otherwise it is not. This is regardless of whether 0 is
 //!				actually a valid address or not.
@@ -136,7 +136,7 @@ inline void assert_pointer_valid_imp(void const * p, bool null_is_valid, wchar_t
 #endif // defined(_DEBUG)
 
 //! This macro asserts that the @e relative difference between @a x and @a y is less than @a e.
-//
+//!
 //! @param	x		Value to compare.
 //! @param	y		Value to compare
 //! @param	e		Maximum relative difference
@@ -160,7 +160,7 @@ inline void assert_pointer_valid_imp(void const * p, bool null_is_valid, wchar_t
 #endif // defined(_DEBUG)
 
 //! This macro asserts that @a i is a valid array index for the array @a a.
-//
+//!
 //! @param	a	Array. @a must be declared as an array
 //! @param	i	Index to check
 //!
@@ -182,7 +182,7 @@ inline void assert_pointer_valid_imp(void const * p, bool null_is_valid, wchar_t
 #endif // defined(_DEBUG)
 
 //! This macro asserts that @a i is 0 or a power of two
-//
+//!
 //! @param	i	Value to check.
 //!
 //! @hideinitializer
@@ -200,7 +200,7 @@ inline void assert_pointer_valid_imp(void const * p, bool null_is_valid, wchar_t
 #endif // defined(_DEBUG)
 
 //! This macro asserts that @a v is aligned on a boundary of @a n
-//
+//!
 //! @param	v	Value to check
 //! @param	n	Alignment value
 //!

@@ -11,13 +11,13 @@ class FixedAllocator
 {
 public:
 
-    //! Constructor
+    //! Constructor.
     FixedAllocator();
 
-    //! Constructor
+    //! Constructor.
     FixedAllocator(int n, void * pBuffer, size_t size);
 
-    //! Destructor
+    //! Destructor.
     ~FixedAllocator();
 
     //! Initializes the allocator after default constructor

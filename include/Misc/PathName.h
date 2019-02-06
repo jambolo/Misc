@@ -74,7 +74,7 @@ struct char_traits_path_char : public std::char_traits<char>
     //@}
 
     //! Returns true if the character is a slash or backslash
-    //
+    //!
     //!
     //! @param	c	character to test
     static bool is_slash(char c)
@@ -83,8 +83,8 @@ struct char_traits_path_char : public std::char_traits<char>
     }
 };
 
-//! A string useable for path names.
-//
+//! A string usable for path names.
+//!
 //!
 //! This class differs from <tt>std::string</tt> in that comparisons are case-independent and '/' and '\' are
 //! equivalent.
