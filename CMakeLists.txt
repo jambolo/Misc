@@ -46,13 +46,10 @@ set(SOURCES
     include/Misc/Timer.h
     include/Misc/Trace.h
     
-    Clock.cpp
     CommandLineList.cpp
     FrameAllocator.cpp
     FrameRateCalculator.cpp
     Pool.cpp
-    Random.cpp
-    Timer.cpp
     Trace.cpp
 )
 source_group(Sources FILES ${SOURCES})

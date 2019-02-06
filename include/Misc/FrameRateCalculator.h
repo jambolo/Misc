@@ -27,11 +27,11 @@ public:
 
 private:
 
-    std::chrono::high_resolution_clock::time_point oldTime_;                  // Time of the previous update
-    std::chrono::high_resolution_clock::time_point oldTime2_;                 // Time of the previous 1 second update
-    int nFrames_;                      // Number of frames since the previous 1 second update
-    float frameRate_;                  // Frame rate of the previous frame
-    float averageFrameRate_;           // Frame rate of the previous 1 second interval
+    std::chrono::high_resolution_clock::time_point oldTime_;    // Time of the previous update
+    std::chrono::high_resolution_clock::time_point oldTime2_;   // Time of the previous 1-second update
+    int nFrames_;                                               // Number of frames since the previous 1-second update
+    float frameRate_;                                           // Frame rate of the previous frame
+    float averageFrameRate_;                                    // Frame rate over the previous second
 };
 
 #endif // !defined(MISC_FRAMERATECALCULATOR_H)
