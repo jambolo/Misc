@@ -19,6 +19,7 @@ set(SOURCES
     test-AfxAssert.cpp
     test-Assertx.cpp
     test-CommandLineList.cpp
+    test-Deferred.cpp
     test-Etc.cpp
     test-Exceptions.cpp
     test-FrameAllocator.cpp

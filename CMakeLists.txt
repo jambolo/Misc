@@ -34,6 +34,7 @@ set(SOURCES
     include/Misc/AfxAssert.h
     include/Misc/Assertx.h
     include/Misc/CommandLineList.h
+    include/Misc/Deferred.h
     include/Misc/Etc.h
     include/Misc/Exceptions.h
     include/Misc/FrameAllocator.h
