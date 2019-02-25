@@ -6,6 +6,9 @@
 #include <string>
 #include <vector>
 
+//! Parses an array of pointers to strings and or a string with whitespace into an array of tokens.
+//!
+//! Standard command line wildcards are supported.
 class CommandLineList
 {
 public:
@@ -21,19 +24,20 @@ public:
     //! @param  argv    argv parameter
     CommandLineList(int argc, char ** argv);
 
-    //! Expand an arg and add the result to the list.
+    //! Expands an arg and add the result to the list.
     //!
     //! If the arg can't be expanded or contains no wildcards, it is added as is.
     //!
     //! @param  arg     argument string
     void include(char const * arg);
 
-    //! Returns the number of parsed command line tokens
+    //! Returns the number of parsed command line tokens.
     size_t argc() const { return args_.size(); }
 
-    //! Returns the parsed command line tokens
+    //! Returns the parsed command line tokens.
     std::vector<std::string> args() const { return args_; }
 
+private:
     std::vector<std::string> args_;
 };
 
