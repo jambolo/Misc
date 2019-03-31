@@ -1,7 +1,7 @@
 cmake_minimum_required (VERSION 3.10)
 
-set(GTEST_ROOT "" CACHED PATH "Location of GTest")
-find_package(GTest)
+set(GTEST_ROOT "" CACHE PATH "Location of GTest")
+find_package(GTest REQUIRED)
 include(GoogleTest)
 
 add_definitions(
@@ -36,5 +36,3 @@ foreach(FILE ${SOURCES})
     target_compile_features(${TEST_EXE} PRIVATE cxx_std_17)
     set_target_properties(${TEST_EXE} PROPERTIES CXX_EXTENSIONS OFF)
 endforeach()
-
-#add_subdirectory(googletest)
