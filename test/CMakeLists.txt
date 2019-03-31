@@ -1,5 +1,7 @@
 cmake_minimum_required (VERSION 3.10)
 
+set(GTEST_ROOT "" CACHED PATH "Location of GTest")
+find_package(GTest)
 include(GoogleTest)
 
 add_definitions(
@@ -10,10 +12,6 @@ add_definitions(
     -D_SECURE_SCL=0
     -D_SCL_SECURE_NO_WARNINGS
 )
-
-set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
-
-include_directories(googletest/googletest/include)
 
 set(SOURCES
     test-AfxAssert.cpp
@@ -31,11 +29,12 @@ set(SOURCES
 
 foreach(FILE ${SOURCES})
     get_filename_component(TEST ${FILE} NAME_WE)
-    add_executable(Misc_${TEST} ${FILE})
-    target_link_libraries(Misc_${TEST} ${PROJECT_NAME} gtest gtest_main)
-    gtest_discover_tests(Misc_${TEST})
-    target_compile_features(Misc_${TEST} PUBLIC cxx_std_17)
-    set_target_properties(Misc_${TEST} PROPERTIES CXX_EXTENSIONS OFF)
+    set(TEST_EXE "${PROJECT_NAME}_${TEST}")
+    add_executable(${TEST_EXE} ${FILE})
+    target_link_libraries(${TEST_EXE} PRIVATE ${PROJECT_NAME} GTest::GTest GTest::Main)
+    gtest_discover_tests(${TEST_EXE})
+    target_compile_features(${TEST_EXE} PRIVATE cxx_std_17)
+    set_target_properties(${TEST_EXE} PROPERTIES CXX_EXTENSIONS OFF)
 endforeach()
 
-add_subdirectory(googletest)
+#add_subdirectory(googletest)
