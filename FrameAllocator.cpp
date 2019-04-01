@@ -2,6 +2,7 @@
 
 #include "Assertx.h"
 
+#include <cassert>
 #include <cstring>
 
 //! @param	pBuffer		Buffer from which allocations are made

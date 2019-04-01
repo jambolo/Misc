@@ -1,0 +1,8 @@
+get_filename_component(Misc_CMAKE_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
+include(CMakeFindDependencyMacro)
+
+if(NOT TARGET Misc::Misc)
+    include("${Misc_CMAKE_DIR}/MiscTargets.cmake")
+endif()
+
+set(Misc_LIBRARIES Misc::Misc)
