@@ -1,5 +1,5 @@
 cmake_minimum_required (VERSION 3.10)
-project(Misc VERSION 1.0.0 LANGUAGES CXX)
+project(Misc VERSION 1.1.0 LANGUAGES CXX)
 
 #configure_file("${PROJECT_SOURCE_DIR}/Version.h.in" "${PROJECT_BINARY_DIR}/Version.h")
 
@@ -32,6 +32,7 @@ set(PRIVATE_INCLUDE_PATHS
 set(SOURCES
     include/Misc/AfxAssert.h
     include/Misc/Assertx.h
+    include/Misc/Base64.h
     include/Misc/CommandLineList.h
     include/Misc/Deferred.h
     include/Misc/Etc.h
@@ -43,6 +44,7 @@ set(SOURCES
     include/Misc/Singleton.h
     include/Misc/Trace.h
     
+    Base64.cpp
     CommandLineList.cpp
     FrameAllocator.cpp
     FrameRateCalculator.cpp
