@@ -1,23 +1,11 @@
 cmake_minimum_required (VERSION 3.10)
-project(Misc VERSION 1.1.0 LANGUAGES CXX)
-
-#configure_file("${PROJECT_SOURCE_DIR}/Version.h.in" "${PROJECT_BINARY_DIR}/Version.h")
+project(Misc VERSION 1.2.0 LANGUAGES CXX)
 
 option(BUILD_SHARED_LIBS "Build libraries as DLLs" FALSE)
 
-set(${PROJECT_NAME}_DOXYGEN_OUTPUT_DIRECTORY "" CACHE PATH "Doxygen output directory (empty to disable)")
-if(${PROJECT_NAME}_DOXYGEN_OUTPUT_DIRECTORY)
-    find_package(Doxygen)
-    if(DOXYGEN_FOUND)
-        set(DOXYGEN_OUTPUT_DIRECTORY ${${PROJECT_NAME}_DOXYGEN_OUTPUT_DIRECTORY})
-        configure_file(Doxyfile.in ${PROJECT_BINARY_DIR}/Doxyfile)
-        add_custom_target(doxygen ALL ${DOXYGEN_EXECUTABLE} ${PROJECT_BINARY_DIR}/Doxyfile
-            WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
-            COMMENT "Generating API documentation with Doxygen" VERBATIM
-            SOURCES ${PROJECT_BINARY_DIR}/Doxyfile
-        )
-    endif(DOXYGEN_FOUND)
-endif()
+#########################################################################
+# Build                                                                 #
+#########################################################################
 
 set(PUBLIC_INCLUDE_PATHS
     $<INSTALL_INTERFACE:include>    
@@ -41,6 +29,7 @@ set(SOURCES
     include/Misc/FrameRateCalculator.h
     include/Misc/PathName.h
     include/Misc/Pool.h
+    include/Misc/Probability.h
     include/Misc/Singleton.h
     include/Misc/Trace.h
     
@@ -49,6 +38,7 @@ set(SOURCES
     FrameAllocator.cpp
     FrameRateCalculator.cpp
     Pool.cpp
+    Probability.cpp
     Trace.cpp
 )
 source_group(Sources FILES ${SOURCES})
@@ -64,8 +54,32 @@ target_compile_definitions(${PROJECT_NAME}
         -D_SECURE_SCL=0
         -D_SCL_SECURE_NO_WARNINGS
 )
-target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_17)
+target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_17)
 set_target_properties(${PROJECT_NAME} PROPERTIES CXX_EXTENSIONS OFF)
+
+#configure_file("${PROJECT_SOURCE_DIR}/Version.h.in" "${PROJECT_BINARY_DIR}/Version.h")
+
+#########################################################################
+# Documentation                                                         #
+#########################################################################
+
+set(${PROJECT_NAME}_DOXYGEN_OUTPUT_DIRECTORY "" CACHE PATH "Doxygen output directory (empty to disable)")
+if(${PROJECT_NAME}_DOXYGEN_OUTPUT_DIRECTORY)
+    find_package(Doxygen)
+    if(DOXYGEN_FOUND)
+        set(DOXYGEN_OUTPUT_DIRECTORY ${${PROJECT_NAME}_DOXYGEN_OUTPUT_DIRECTORY})
+        configure_file(Doxyfile.in ${PROJECT_BINARY_DIR}/Doxyfile)
+        add_custom_target(doxygen ALL ${DOXYGEN_EXECUTABLE} ${PROJECT_BINARY_DIR}/Doxyfile
+            WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
+            COMMENT "Generating API documentation with Doxygen" VERBATIM
+            SOURCES ${PROJECT_BINARY_DIR}/Doxyfile
+        )
+    endif(DOXYGEN_FOUND)
+endif()
+
+#########################################################################
+# Testing                                                               #
+#########################################################################
 
 if (CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
     include(CTest)
@@ -75,50 +89,49 @@ if (CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
     endif()
 endif()
 
-# Installation
+#########################################################################
+# Installation                                                          #
+#########################################################################
 
-add_library(Misc::Misc ALIAS Misc)
+add_library(${PROJECT_NAME}::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 
 include(GNUInstallDirs)
-set(INSTALL_CONFIGDIR ${CMAKE_INSTALL_LIBDIR}/cmake/Misc)
+set(INSTALL_CONFIGDIR ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME})
 
-install(TARGETS Misc
-    EXPORT misc-targets
+install(TARGETS ${PROJECT_NAME}
+    EXPORT ${PROJECT_NAME}-targets
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
 )
 install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
-install(EXPORT misc-targets
-    FILE MiscTargets.cmake
-    NAMESPACE Misc::
+install(EXPORT ${PROJECT_NAME}-targets
+    FILE ${PROJECT_NAME}Targets.cmake
+    NAMESPACE ${PROJECT_NAME}::
     DESTINATION ${INSTALL_CONFIGDIR}
 )
 
-#This is required so that the exported target has the name Misc and not misc
-# set_target_properties(misc PROPERTIES EXPORT_NAME Misc)
-
-#Create a ConfigVersion.cmake file
+# Create a ConfigVersion.cmake file
 include(CMakePackageConfigHelpers)
 write_basic_package_version_file(
-    ${CMAKE_CURRENT_BINARY_DIR}/MiscConfigVersion.cmake
+    ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake
     VERSION ${PROJECT_VERSION}
     COMPATIBILITY AnyNewerVersion
 )
 
-configure_package_config_file(${CMAKE_CURRENT_LIST_DIR}/cmake/MiscConfig.cmake.in
-    ${CMAKE_CURRENT_BINARY_DIR}/MiscConfig.cmake
+configure_package_config_file(${CMAKE_CURRENT_LIST_DIR}/cmake/${PROJECT_NAME}Config.cmake.in
+    ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake
     INSTALL_DESTINATION ${INSTALL_CONFIGDIR}
 )
 
-#Install the config, configversion and custom find modules
+# Install the config, configversion and custom find modules
 install(FILES
-    ${CMAKE_CURRENT_BINARY_DIR}/MiscConfig.cmake
-    ${CMAKE_CURRENT_BINARY_DIR}/MiscConfigVersion.cmake
+    ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake
+    ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake
     DESTINATION ${INSTALL_CONFIGDIR}
 )
 
 # Exporting from the build tree
-export(EXPORT misc-targets FILE ${CMAKE_CURRENT_BINARY_DIR}/MiscTargets.cmake NAMESPACE Misc::)
+export(EXPORT ${PROJECT_NAME}-targets FILE ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Targets.cmake NAMESPACE ${PROJECT_NAME}::)
 
-#Register package in user's package registry
-export(PACKAGE Misc)
+# Register package in user's package registry
+export(PACKAGE ${PROJECT_NAME})
