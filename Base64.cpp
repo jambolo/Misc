@@ -37,7 +37,7 @@
  	Original: https://github.com/ReneNyffenegger/cpp-base64
 */
 
-#include "Base64.h"
+#include "base64.h"
 
 static const std::string base64_chars = 
              "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -107,7 +107,7 @@ std::string Base64::decode(std::string const& encoded_string) {
           std::string::size_type x = base64_chars.find(char_array_4[i]);
           if (x == std::string::npos)
               return ret;
-          char_array_4[i] = static_cast<unsigned char>(x);
+          char_array_4[i] = x & 0xff;
       }
 
       char_array_3[0] = ( char_array_4[0] << 2       ) + ((char_array_4[1] & 0x30) >> 4);
@@ -126,7 +126,7 @@ std::string Base64::decode(std::string const& encoded_string) {
         std::string::size_type x = base64_chars.find(char_array_4[j]);
         if (x == std::string::npos)
             return ret;
-        char_array_4[j] = static_cast<unsigned char>(x);
+        char_array_4[j] = x & 0xff;
     }
 
     char_array_3[0] = (char_array_4[0] << 2) + ((char_array_4[1] & 0x30) >> 4);
