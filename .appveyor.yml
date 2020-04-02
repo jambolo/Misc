@@ -1,0 +1,66 @@
+# AppVeyor is very similar to travis, with some differences to comply with
+# MS Windows builds. See https://www.appveyor.com/docs/build-configuration/
+# for the full documentation of the a build configuration script. See
+# https://www.appveyor.com/docs/appveyor-yml/ for a complete appveyor.yml
+# full syntax reference.
+
+version: 1.0.{build}
+
+clone_folder: c:\projects\misc
+
+environment:
+  matrix:
+    #- APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
+    #  CMAKE_GENERATOR: "Visual Studio 14 2015"
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
+      CMAKE_GENERATOR: "Visual Studio 14 2015 Win64"
+    #- APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    #  CMAKE_GENERATOR: "Visual Studio 15 2017"
+    #- APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    #  CMAKE_GENERATOR: "Visual Studio 15 2017 Win64"
+
+init:
+    # Print some more system information after installing all build tools
+    - ps: echo "-------------------- BEGIN SYSTEM INFORMATION --------------------"
+    - ps: echo $env:CMAKE_GENERATOR
+    - ps: cmake --version
+    - ps: echo "--------------------  END SYSTEM INFORMATION  --------------------"
+
+install:
+
+build:
+
+build_script:
+  # Build and install GTest
+  - ps: cd c:\projects
+  - ps: git clone -q https://github.com/google/googletest.git
+  - ps: cd googletest
+  - ps: md build
+  - ps: md install
+  - ps: cd build
+  - ps: cmake -G"$env:CMAKE_GENERATOR" -DCMAKE_INSTALL_PREFIX=C:/projects/googletest/install -Dgtest_force_shared_crt=1 ..
+
+  # Build googletest
+  - ps: cmake --build . --config Debug
+  - ps: cmake --build . --config Release
+  # Install googletest 
+  - ps: cmake --build . --config Debug --target INSTALL
+  - ps: cmake --build . --config Release --target INSTALL
+
+  # Build Misc
+  - ps: cd c:\projects\misc
+  - ps: md build
+  - ps: cd build
+  - ps: cmake -G"$env:CMAKE_GENERATOR" -DBUILD_TESTING:BOOL=ON -DGTEST_ROOT=C:/projects/googletest/install ..
+
+  # Build Misc for Release and Debug
+  - ps: cmake --build . --config Debug
+  - ps: cmake --build . --config Release
+
+after_build:
+  # Install only release
+  #- ps: cmake --build C:\projects\misc\build --config Release --target INSTALL
+
+test_script:
+  - ps: ctest -C Debug -VV
+  - ps: ctest -C Release -VV
