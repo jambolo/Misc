@@ -40,7 +40,7 @@ inline bool non_standard_assert_display(char const * text, char const * file, in
 
 inline void assert_memset_valid_imp(size_t size, signed v, char const * file, int line)
 {
-    if (((v < -128) || (v > 127)) || ((size != 1) && (v != 0) && (v != -1)))
+    if (((v < -128) || (v > 255)) || ((size != 1) && (v != 0) && (v != -1)))
     {
         if (_CrtDbgReport(_CRT_ERROR, file, line, NULL, "Invalid memset parameters"))
             _CrtDbgBreak();

@@ -53,7 +53,7 @@
 
 inline void _assert_memset_valid_imp(int size, signed v, char const * file, int line)
 {
-    if (!(((v >= -128) && (v <= 128)) && ((size == 1) || (v == 0) || (v == -1))) && AfxAssertFailedLine(file, line))
+    if (!(((v >= -128) && (v <= 255)) && ((size == 1) || (v == 0) || (v == -1))) && AfxAssertFailedLine(file, line))
         AfxDebugBreak();
 }
 
@@ -113,7 +113,7 @@ inline void _assert_memset_valid_imp(int size, unsigned v, char const * file, in
 #define ASSERT_ALMOST_EQUAL(x, y, e)                                                       \
     do                                                                                     \
     {                                                                                      \
-        if (!(fabs(((x) - (y)) / (x)) >= (e)) && AfxAssertFailedLine(THIS_FILE, __LINE__)) \
+        if (!((x) == (y) || (abs((x) - (y)) / std::max(abs(x), abs(y)) <= abs(e))) && AfxAssertFailedLine(THIS_FILE, __LINE__)) \
         {                                                                                  \
             AfxDebugBreak();                                                               \
         }                                                                                  \
@@ -139,7 +139,7 @@ inline void _assert_memset_valid_imp(int size, unsigned v, char const * file, in
 #define ASSERT_ARRAY_INDEX_VALID(a, i)                                                       \
     do                                                                                       \
     {                                                                                        \
-        if (!(0 <= (i) && (i) <= elementsof(a)) && AfxAssertFailedLine(THIS_FILE, __LINE__)) \
+        if (!(0 <= (i) && (i) < elementsof(a)) && AfxAssertFailedLine(THIS_FILE, __LINE__))  \
         {                                                                                    \
             AfxDebugBreak();                                                                 \
         }                                                                                    \
