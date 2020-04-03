@@ -1,7 +1,6 @@
+#if !defined(MISC_FRAMERATECALCULATOR_H_INCLUDED)
+#define MISC_FRAMERATECALCULATOR_H_INCLUDED
 #pragma once
-
-#if !defined(MISC_FRAMERATECALCULATOR_H)
-#define MISC_FRAMERATECALCULATOR_H
 
 #include <chrono>
 
@@ -34,4 +33,4 @@ private:
     float averageFrameRate_;                                    // Frame rate over the previous second
 };
 
-#endif // !defined(MISC_FRAMERATECALCULATOR_H)
+#endif // !defined(MISC_FRAMERATECALCULATOR_H_INCLUDED)

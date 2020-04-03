@@ -1,7 +1,6 @@
+#if !defined(MiSC_EXCEPTIONS_H_INCLUDED)
+#define MiSC_EXCEPTIONS_H_INCLUDED
 #pragma once
-
-#if !defined(MiSC_EXCEPTIONS_H)
-#define MiSC_EXCEPTIONS_H
 
 #include <stdexcept>
 #include <string>
@@ -33,4 +32,4 @@ public:
     virtual ~ConstructorFailedException() override = default;
 };
 
-#endif // !defined(MiSC_EXCEPTIONS_H)
+#endif // !defined(MiSC_EXCEPTIONS_H_INCLUDED)

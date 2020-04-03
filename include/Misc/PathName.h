@@ -1,7 +1,6 @@
+#if !defined(MISC_PATHNAME_H_INCLUDED)
+#define MISC_PATHNAME_H_INCLUDED
 #pragma once
-
-#if !defined(PathName_h__)
-#define PathName_h__
 
 #include <locale>
 #include <string>
@@ -93,4 +92,4 @@ class PathName : public std::basic_string<char, char_traits_path_char>
 {
 };
 
-#endif // !defined(PathName_h__)
+#endif // !defined(MISC_PATHNAME_H_INCLUDED)

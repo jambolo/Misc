@@ -5,6 +5,7 @@
 
 #ifndef BASE64_H_C0CE2A47_D10E_42C9_A27C_C883944E704A
 #define BASE64_H_C0CE2A47_D10E_42C9_A27C_C883944E704A
+#pragma once
 
 /*
   This code has been modified from
@@ -14,7 +15,6 @@
   Original: https://github.com/ReneNyffenegger/cpp-base64
 */
 
-#pragma once
 
 #include <string>
 

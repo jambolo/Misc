@@ -1,7 +1,6 @@
+#if !defined(MISC_ETC_H_INCLUDED)
+#define MISC_ETC_H_INCLUDED
 #pragma once
-
-#if !defined(Etc_h__)
-#define Etc_h__
 
 #include <string>
 
@@ -9,7 +8,7 @@
 //!
 //@{
 
-//! Returns number of elements in the array @a a.
+//! Returns number of elements in the array a.
 //!
 //! @param	a	Array
 //!
@@ -27,9 +26,9 @@ namespace std
 //! A Unicode-selectable string type.
 
 #if defined(_UNICODE)
-    typedef std::wstring tstring;
+using tstring = wstring;
 #else // defined( _UNICODE )
-    typedef std::string tstring;
+using tstring = string;
 #endif // defined(_UNICODE)
 } // namespace std
 
@@ -43,4 +42,4 @@ namespace std
 
 //@}
 
-#endif // !defined(Etc_h__)
+#endif // !defined(MISC_ETC_H_INCLUDED)

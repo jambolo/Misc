@@ -1,8 +1,6 @@
+#if !defined(MISC_DEFERRED_H_INCLUDED)
+#define MISC_DEFERRED_H_INCLUDED
 #pragma once
-#pragma once
-
-#if !defined(MISC_DEFERRED_H)
-#define MISC_DEFERRED_H
 
 //! A type that knows if it has ever been given a value.
 //!
@@ -74,4 +72,4 @@ private:
     bool deferred_ = false;
 };
 
-#endif // !defined(MISC_DEFERRED_H)
+#endif // !defined(MISC_DEFERRED_H_INCLUDED)

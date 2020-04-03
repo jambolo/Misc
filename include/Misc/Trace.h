@@ -1,7 +1,6 @@
+#if !defined(MISC_TRACE_H__INCLUDED)
+#define MISC_TRACE_H__INCLUDED
 #pragma once
-
-#if !defined(trace_h__)
-#define trace_h__
 
 //! Outputs to the debugger only in a DEBUG build.
 //!
@@ -37,4 +36,4 @@ inline int __BiteMe__(char const *, ...) { return 0; }
 
 #endif // defined(_DEBUG)
 
-#endif // !defined(trace_h__)
+#endif // !defined(MISC_TRACE_H__INCLUDED)

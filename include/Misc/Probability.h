@@ -1,6 +1,5 @@
-#if !defined(MISC_PROBABILITY_H)
-#define MISC_PROBABILITY_H
-
+#if !defined(MISC_PROBABILITY_H_INCLUDED)
+#define MISC_PROBABILITY_H_INCLUDED
 #pragma once
 
 #include <cstdint>
@@ -17,4 +16,4 @@ int64_t combinations(int64_t n, int64_t k);
 //! Computes "n multichoose k".
 int64_t multisets(int64_t n, int64_t k);
 
-#endif // !defined(MISC_PROBABILITY_H)
+#endif // !defined(MISC_PROBABILITY_H_INCLUDED)
