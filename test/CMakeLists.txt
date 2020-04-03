@@ -22,6 +22,7 @@ set(SOURCES
     test-Etc.cpp
     test-Exceptions.cpp
     test-FrameAllocator.cpp
+    test-FrameRateCalculator.cpp
     test-PathName.cpp
     test-Pool.cpp
     test-Probability.cpp
