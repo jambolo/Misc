@@ -146,9 +146,9 @@ inline void assert_pointer_valid_imp(void const * p, bool null_is_valid, wchar_t
 #if defined(_DEBUG)
 
 #include <cmath>
-
-#define assert_almost_equal(x, y, e)               \
-    (void)((fabs((x) - (y)) >= fabs((e) * (x))) || \
+#include <algorithm>
+#define assert_almost_equal(x, y, e)                                                              \
+    (void)(((x) == (y) || (fabs((x) - (y)) / std::max(fabs(x), fabs(y)) <= fabs(e))) ||           \
            (_wassert(_CRT_WIDE(#x) L" == " _CRT_WIDE(#y), _CRT_WIDE(__FILE__), __LINE__), 0))
 
 #else // defined ( _DEBUG )

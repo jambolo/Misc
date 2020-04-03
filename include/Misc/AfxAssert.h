@@ -109,11 +109,13 @@ inline void _assert_memset_valid_imp(int size, unsigned v, char const * file, in
 #if defined(_DEBUG)
 
 #include <cmath>
+#include <algorithm>
 
 #define ASSERT_ALMOST_EQUAL(x, y, e)                                                       \
     do                                                                                     \
     {                                                                                      \
-        if (!((x) == (y) || (abs((x) - (y)) / std::max(abs(x), abs(y)) <= abs(e))) && AfxAssertFailedLine(THIS_FILE, __LINE__)) \
+        if (!((x) == (y) || (fabs((x) - (y)) / std::max(fabs(x), fabs(y)) <= fabs(e))) &&  \
+              AfxAssertFailedLine(THIS_FILE, __LINE__))                                    \
         {                                                                                  \
             AfxDebugBreak();                                                               \
         }                                                                                  \
