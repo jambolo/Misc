@@ -1,5 +1,5 @@
 cmake_minimum_required (VERSION 3.10)
-project(Misc VERSION 1.2.2 LANGUAGES CXX)
+project(Misc VERSION 1.2.2 LANGUAGES CXX DESCRIPTION "Miscellanous features and functionality not worthy of individual projects")
 
 option(BUILD_SHARED_LIBS "Build libraries as DLLs" FALSE)
 
@@ -14,7 +14,7 @@ set(PUBLIC_INCLUDE_PATHS
 
 set(PRIVATE_INCLUDE_PATHS
     .
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/Misc
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/${PROJECT_NAME}
 )
 
 set(SOURCES
@@ -42,6 +42,10 @@ set(SOURCES
     Trace.cpp
 )
 source_group(Sources FILES ${SOURCES})
+
+if(NOT CMAKE_DEBUG_POSTFIX)
+  set(CMAKE_DEBUG_POSTFIX d)
+endif()
 
 add_library(${PROJECT_NAME} ${SOURCES})
 target_include_directories(${PROJECT_NAME} PUBLIC ${PUBLIC_INCLUDE_PATHS} PRIVATE ${PRIVATE_INCLUDE_PATHS})
@@ -81,7 +85,7 @@ endif()
 # Testing                                                               #
 #########################################################################
 
-if (CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
+if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
     include(CTest)
     message(STATUS "Testing is enabled. Turn on BUILD_TESTING to build tests.")
     if(BUILD_TESTING)
