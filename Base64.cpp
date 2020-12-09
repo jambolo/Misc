@@ -37,7 +37,7 @@
  	Original: https://github.com/ReneNyffenegger/cpp-base64
 */
 
-#include "base64.h"
+#include "Base64.h"
 
 static const std::string base64_chars = 
              "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
