@@ -1,7 +1,6 @@
-#pragma once
-
 #if !defined(MISC_ASSERTX_H)
 #define MISC_ASSERTX_H
+#pragma once
 
 #if defined(_DEBUG)
 
@@ -40,7 +39,7 @@ inline bool non_standard_assert_display(char const * text, char const * file, in
 
 inline void assert_memset_valid_imp(size_t size, signed v, char const * file, int line)
 {
-    if (((v < -128) || (v > 127)) || ((size != 1) && (v != 0) && (v != -1)))
+    if (((v < -128) || (v > 255)) || ((size != 1) && (v != 0) && (v != -1)))
     {
         if (_CrtDbgReport(_CRT_ERROR, file, line, NULL, "Invalid memset parameters"))
             _CrtDbgBreak();
@@ -68,19 +67,18 @@ inline void assert_pointer_valid_imp(void const * p, bool null_is_valid, wchar_t
 
 #endif // defined(_DEBUG)
 
-//! This macro asserts that @a v is between @a l and @a h (inclusive)
+//! This macro asserts that v is between l and h (inclusive)
 //!
-//! @param	l,h		Upper and lower limits. @a l must be <= @a h.
+//! @param	l,h		Upper and lower limits. l must be <= h.
 //! @param	v		Value to check
 //!
 //! @hideinitializer
 
 #if defined(_DEBUG)
 
-#define assert_limits(l, v,                                                                                                          \
-                      h) (void)(((l) <= (v) && (v) <= (h)) ||                                                                        \
-                                (_wassert(_CRT_WIDE(#l) L" <= " _CRT_WIDE(#v) L" <= " _CRT_WIDE(#h), _CRT_WIDE(__FILE__), __LINE__), \
-                                 0))
+#define assert_limits(l, v, h)                                                                                      \
+    (void)(((l) <= (v) && (v) <= (h)) ||                                                                            \
+           (_wassert(_CRT_WIDE(#l) L" <= " _CRT_WIDE(#v) L" <= " _CRT_WIDE(#h), _CRT_WIDE(__FILE__), __LINE__), 0))
 
 #else // defined ( _DEBUG )
 
@@ -135,22 +133,22 @@ inline void assert_pointer_valid_imp(void const * p, bool null_is_valid, wchar_t
 
 #endif // defined(_DEBUG)
 
-//! This macro asserts that the @e relative difference between @a x and @a y is less than @a e.
+//! This macro asserts that the @e relative difference between x and y is less than e.
 //!
 //! @param	x		Value to compare.
 //! @param	y		Value to compare
 //! @param	e		Maximum relative difference
 //!
-//! @note The actual difference between @a x and @a y must be less than @a x * @a e.
+//! @note The actual difference between x and y must be less than x * e.
 //!
 //! @hideinitializer
 
 #if defined(_DEBUG)
 
 #include <cmath>
-
-#define assert_almost_equal(x, y, e)               \
-    (void)((fabs((x) - (y)) >= fabs((e) * (x))) || \
+#include <algorithm>
+#define assert_almost_equal(x, y, e)                                                              \
+    (void)(((x) == (y) || (fabs((x) - (y)) / std::max(fabs(x), fabs(y)) <= fabs(e))) ||           \
            (_wassert(_CRT_WIDE(#x) L" == " _CRT_WIDE(#y), _CRT_WIDE(__FILE__), __LINE__), 0))
 
 #else // defined ( _DEBUG )
@@ -159,12 +157,12 @@ inline void assert_pointer_valid_imp(void const * p, bool null_is_valid, wchar_t
 
 #endif // defined(_DEBUG)
 
-//! This macro asserts that @a i is a valid array index for the array @a a.
+//! This macro asserts that i is a valid array index for the array a.
 //!
-//! @param	a	Array. @a must be declared as an array
+//! @param	a	Array. must be declared as an array
 //! @param	i	Index to check
 //!
-//! @warning @a a must be declared as an array.
+//! @warning a must be declared as an array.
 //!
 //! @hideinitializer
 
@@ -181,7 +179,7 @@ inline void assert_pointer_valid_imp(void const * p, bool null_is_valid, wchar_t
 
 #endif // defined(_DEBUG)
 
-//! This macro asserts that @a i is 0 or a power of two
+//! This macro asserts that i is 0 or a power of two
 //!
 //! @param	i	Value to check.
 //!
@@ -199,7 +197,7 @@ inline void assert_pointer_valid_imp(void const * p, bool null_is_valid, wchar_t
 
 #endif // defined(_DEBUG)
 
-//! This macro asserts that @a v is aligned on a boundary of @a n
+//! This macro asserts that v is aligned on a boundary of n
 //!
 //! @param	v	Value to check
 //! @param	n	Alignment value

@@ -2,9 +2,9 @@
 
 #include <Afx.h>
 
-//! This macro asserts that @a v is between @a l and @a h (inclusive)
+//! This macro asserts that v is between l and h (inclusive)
 //!
-//! @param	l,h		Upper and lower limits. @a l must be <= @a h.
+//! @param	l,h		Upper and lower limits. l must be <= h.
 //! @param	v		Value to check
 //!
 //! @hideinitializer
@@ -53,7 +53,7 @@
 
 inline void _assert_memset_valid_imp(int size, signed v, char const * file, int line)
 {
-    if (!(((v >= -128) && (v <= 128)) && ((size == 1) || (v == 0) || (v == -1))) && AfxAssertFailedLine(file, line))
+    if (!(((v >= -128) && (v <= 255)) && ((size == 1) || (v == 0) || (v == -1))) && AfxAssertFailedLine(file, line))
         AfxDebugBreak();
 }
 
@@ -97,23 +97,25 @@ inline void _assert_memset_valid_imp(int size, unsigned v, char const * file, in
 
 #endif // defined(_DEBUG)
 
-//! This macro asserts that the @e relative difference between @a x and @a y is less than @a e.
+//! This macro asserts that the @e relative difference between x and y is less than e.
 //!
-//! @param	x,y		Values being compared. @a x should not be 0.
+//! @param	x,y		Values being compared.
 //! @param	e		Maximum relative difference
 //!
-//! @note The actual difference between @a x and @a y must be less than @a x * @a e.
+//! @note The actual difference between x and y must be less than max(x,y) * e.
 //!
 //! @hideinitializer
 
 #if defined(_DEBUG)
 
 #include <cmath>
+#include <algorithm>
 
 #define ASSERT_ALMOST_EQUAL(x, y, e)                                                       \
     do                                                                                     \
     {                                                                                      \
-        if (!(fabs(((x) - (y)) / (x)) >= (e)) && AfxAssertFailedLine(THIS_FILE, __LINE__)) \
+        if (!((x) == (y) || (fabs((x) - (y)) / std::max(fabs(x), fabs(y)) <= fabs(e))) &&  \
+              AfxAssertFailedLine(THIS_FILE, __LINE__))                                    \
         {                                                                                  \
             AfxDebugBreak();                                                               \
         }                                                                                  \
@@ -125,11 +127,11 @@ inline void _assert_memset_valid_imp(int size, unsigned v, char const * file, in
 
 #endif // defined(_DEBUG)
 
-//! This macro asserts that @a i is a valid array index for the array @a a.
+//! This macro asserts that i is a valid array index for the array a.
 //!
-//! @warning @a a must be declared as an array.
+//! @warning a must be declared as an array.
 //!
-//! @param	a	Array. @a must be declared as an array
+//! @param	a	Array. must be declared as an array
 //! @param	i	Index to check
 //!
 //! @hideinitializer
@@ -139,7 +141,7 @@ inline void _assert_memset_valid_imp(int size, unsigned v, char const * file, in
 #define ASSERT_ARRAY_INDEX_VALID(a, i)                                                       \
     do                                                                                       \
     {                                                                                        \
-        if (!(0 <= (i) && (i) <= elementsof(a)) && AfxAssertFailedLine(THIS_FILE, __LINE__)) \
+        if (!(0 <= (i) && (i) < elementsof(a)) && AfxAssertFailedLine(THIS_FILE, __LINE__))  \
         {                                                                                    \
             AfxDebugBreak();                                                                 \
         }                                                                                    \
@@ -151,7 +153,7 @@ inline void _assert_memset_valid_imp(int size, unsigned v, char const * file, in
 
 #endif // defined(_DEBUG)
 
-//! This macro asserts that @a i is non-negative, and 0 or a power of two
+//! This macro asserts that i is non-negative, and 0 or a power of two
 //!
 //! @param	i	Value to check.
 //!

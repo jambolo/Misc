@@ -1,7 +1,6 @@
+#if !defined(MISC_POOL_H_INCLUDED)
+#define MISC_POOL_H_INCLUDED
 #pragma once
-
-#if !defined(MISC_POOL_H)
-#define MISC_POOL_H
 
 #include <memory>
 
@@ -118,4 +117,4 @@ private:
     FixedAllocator fixedAllocator_; // Allocator that allocates items from the pool
 };
 
-#endif // !defined(MISC_POOL_H)
+#endif // !defined(MISC_POOL_H_INCLUDED)

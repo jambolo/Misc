@@ -1,7 +1,6 @@
+#if !defined(MISC_SINGLETON_H_INCLUDED)
+#define MISC_SINGLETON_H_INCLUDED
 #pragma once
-
-#if !defined(MISC_SINGLETON_H)
-#define MISC_SINGLETON_H
 
 //! Base class used to implement a %Singleton pattern.
 //!
@@ -67,4 +66,4 @@ private:
 template <class T>
 Singleton<T> * Singleton<T>::instance_ = nullptr;
 
-#endif // !defined(MISC_SINGLETON_H)
+#endif // !defined(MISC_SINGLETON_H_INCLUDED)

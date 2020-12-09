@@ -2,24 +2,45 @@
 
 #include "gtest/gtest.h"
 
-TEST(ExceptionsTest, ConstructorFailedException)
+struct Fail
 {
-    bool thrown;
-    thrown = false;
-    try
+    Fail()
     {
         throw ConstructorFailedException();
     }
-    catch (...)
+    Fail(char const * text)
     {
-        thrown = true;
+        throw ConstructorFailedException(text);
     }
-    EXPECT_TRUE(thrown);
-}
+};
 
-int main(int argc, char **argv)
+struct Succeed
 {
-    ::testing::InitGoogleTest(&argc, argv);
-    int rv = RUN_ALL_TESTS();
-    return rv;
+};
+
+TEST(ExceptionsTest, ConstructorFailedException)
+{
+    EXPECT_NO_THROW({ (void)Succeed(); });
+    EXPECT_THROW({ (void)Fail(); }, ConstructorFailedException);
+
+    std::string text;
+    try
+    {
+        (void)Fail();
+    }
+    catch (ConstructorFailedException const & ex)
+    {
+        text = ex.what();
+    }
+    EXPECT_EQ(text, "constructor failed");
+
+    try
+    {
+        (void)Fail("alternate text");
+    }
+    catch (ConstructorFailedException const & ex)
+    {
+        text = ex.what();
+    }
+    EXPECT_EQ(text, "alternate text");
 }

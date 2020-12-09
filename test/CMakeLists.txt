@@ -3,7 +3,6 @@ cmake_minimum_required (VERSION 3.10)
 set(GTEST_ROOT "" CACHE PATH "Location of GTest")
 find_package(GTest REQUIRED)
 include(GoogleTest)
-find_package(Misc REQUIRED)
 
 add_definitions(
     -DNOMINMAX
@@ -17,13 +16,16 @@ add_definitions(
 set(SOURCES
     test-AfxAssert.cpp
     test-Assertx.cpp
+    test-Base64.cpp
     test-CommandLineList.cpp
     test-Deferred.cpp
     test-Etc.cpp
     test-Exceptions.cpp
     test-FrameAllocator.cpp
+    test-FrameRateCalculator.cpp
     test-PathName.cpp
     test-Pool.cpp
+    test-Probability.cpp
     test-Singleton.cpp
     test-Trace.cpp
 )
@@ -32,7 +34,7 @@ foreach(FILE ${SOURCES})
     get_filename_component(TEST ${FILE} NAME_WE)
     set(TEST_EXE "${PROJECT_NAME}_${TEST}")
     add_executable(${TEST_EXE} ${FILE})
-    target_link_libraries(${TEST_EXE} PRIVATE Misc::Misc GTest::GTest GTest::Main)
+    target_link_libraries(${TEST_EXE} PRIVATE Misc GTest::GTest GTest::Main)
     gtest_discover_tests(${TEST_EXE})
     target_compile_features(${TEST_EXE} PRIVATE cxx_std_17)
     set_target_properties(${TEST_EXE} PROPERTIES CXX_EXTENSIONS OFF)

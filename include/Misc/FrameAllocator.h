@@ -1,7 +1,6 @@
+#if !defined(MISC_FRAMEALLOCATOR_H_INCLUDED)
+#define MISC_FRAMEALLOCATOR_H_INCLUDED
 #pragma once
-
-#if !defined(MISC_FRAMEALLOCATOR_H)
-#define MISC_FRAMEALLOCATOR_H
 
 #include <memory>
 
@@ -144,4 +143,4 @@ bool operator !=(TypedFrameAllocator<T> const & a1, TypedFrameAllocator<T> const
     return !a1.operator ==(a2);
 }
 
-#endif // !defined(MISC_FRAMEALLOCATOR_H)
+#endif // !defined(MISC_FRAMEALLOCATOR_H_INCLUDED)

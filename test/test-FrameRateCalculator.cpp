@@ -2,7 +2,7 @@
 
 #include "gtest/gtest.h"
 
-TEST(FrameAllocatorTest, DISABLED_Placeholder)
+TEST(FrameRateCalculatorTest, DISABLED_Placeholder)
 {
     GTEST_SKIP();
 }

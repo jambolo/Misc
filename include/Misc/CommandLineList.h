@@ -1,7 +1,6 @@
+#if !defined(MISC_COMMANDLINELIST_H_INCLUDED)
+#define MISC_COMMANDLINELIST_H_INCLUDED
 #pragma once
-
-#if !defined(MISC_COMMANDLINELIST_H)
-#define MISC_COMMANDLINELIST_H
 
 #include <string>
 #include <vector>
@@ -41,4 +40,4 @@ private:
     std::vector<std::string> args_;
 };
 
-#endif // !defined(MISC_COMMANDLINELIST_H)
+#endif // !defined(MISC_COMMANDLINELIST_H_INCLUDED)
